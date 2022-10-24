@@ -1,9 +1,16 @@
+import Header from "./components/Header";
+import HyperparametersView from "./components/HyperparametersView";
 import "./styles/app.scss";
 
 function App() {
   return (
     <div className="app">
-      <h1>Hello World Soma</h1>
+      <Header>
+        <h1>
+          A Neural Network Sandbox on <br></br>your Web Browser
+        </h1>
+      </Header>
+      <HyperparametersView />
     </div>
   );
 }
