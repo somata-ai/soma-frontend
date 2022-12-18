@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { HiPlay } from "react-icons/hi2";
+import {BsArrowCounterclockwise} from "react-icons/bs";
 import styles from "../styles/hyperparametersView.module.scss";
 import DropdownMenu from "./DropdownMenu";
 
@@ -14,11 +15,11 @@ const HyperparametersView = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons_container}>
-        <div>re</div>
+        <BsArrowCounterclockwise className={styles.reset_button} />
         <div className={styles.start_button}>
           <HiPlay />
         </div>
-        <div>ne</div>
+        {/* <div>ne</div> */}
       </div>
 
       <div className={styles.epoch}>
