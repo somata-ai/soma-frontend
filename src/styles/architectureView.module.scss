@@ -1,0 +1,32 @@
+.container {
+    border: 1px solid red;
+
+}
+
+.buttonsContainer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    color: black;
+    font-size: large;
+    border: 1px solid blue;
+}
+
+.architectureContainer {
+    height: 500px;
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    overflow: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 1px solid green;   
+}
+
+
+.button {
+    color: teal;
+    font-size: 30px;
+}
