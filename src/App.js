@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import HyperparametersView from "./components/HyperparametersView";
+import Network from "./components/Network";
 import "./styles/app.scss";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
           A Neural Network Sandbox on <br></br>your Web Browser
         </h1>
       </Header>
-      <HyperparametersView />
+      <Network />
     </div>
   );
 }
