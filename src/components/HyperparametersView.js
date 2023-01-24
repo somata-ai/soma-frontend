@@ -1,6 +1,7 @@
+import { testTensorFlow } from "../models/model";
 import { useState } from "react";
 import { HiPlay } from "react-icons/hi2";
-import {BsArrowCounterclockwise} from "react-icons/bs";
+import { BsArrowCounterclockwise } from "react-icons/bs";
 import styles from "../styles/hyperparametersView.module.scss";
 import DropdownMenu from "./DropdownMenu";
 
@@ -17,7 +18,7 @@ const HyperparametersView = (props) => {
       <div className={styles.buttons_container}>
         <BsArrowCounterclockwise className={styles.reset_button} />
         <div className={styles.start_button}>
-          <HiPlay />
+          <HiPlay onClick={() => testTensorFlow()} />
         </div>
         {/* <div>ne</div> */}
       </div>
@@ -47,8 +48,12 @@ const Card = (props) => {
       <h4>{props.title}</h4>
       <DropdownMenu title={selected}>
         {props.options
-          ? props.options.map((option) => {
-              return <div onClick={() => setSelected(option)}>{option}</div>;
+          ? props.options.map((option, index) => {
+              return (
+                <div key={index} onClick={() => setSelected(option)}>
+                  {option}
+                </div>
+              );
             })
           : ""}
       </DropdownMenu>

@@ -22,8 +22,8 @@ const removeNeuron = (id, layers, updateLayers) => {
 const Layer = (props) => {
   return (
     <div className={styles.layer}>
-      {[...Array(props.layer.neurons)].map((x) => {
-        return <Neuron />;
+      {[...Array(props.layer.neurons)].map((n, index) => {
+        return <Neuron key={index} />;
       })}
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
