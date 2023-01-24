@@ -15,7 +15,6 @@ const addLayer = (layers, updateLayers) => {
     type: layerTypes.linear,
     id: uuid(),
   };
-
   updateLayers([...layers, newLayer]);
 };
 
@@ -42,7 +41,14 @@ const ArchitectureView = (props) => {
 
       <div className={styles.architectureContainer}>
         {props.layers.map((layer) => {
-          return <Layer key={layer.id} layer={layer} />;
+          return (
+            <Layer
+              key={layer.id}
+              layer={layer}
+              layers={props.layers}
+              updateLayers={props.updateLayers}
+            />
+          );
         })}
       </div>
     </div>

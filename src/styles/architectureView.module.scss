@@ -1,6 +1,5 @@
 .container {
-    border: 1px solid red;
-
+    border: 1px solid yellow;
 }
 
 .buttonsContainer {
@@ -19,12 +18,11 @@
     width: 1000px;
     margin: auto;
     display: flex;
-    overflow: auto;
+    overflow-x: auto;
     margin-top: 50px;
     margin-bottom: 50px;
     border: 1px solid green;   
 }
-
 
 .button {
     color: teal;

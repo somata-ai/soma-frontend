@@ -18,7 +18,7 @@ const Network = (props) => {
       id: uuid(),
     },
     {
-      neurons: 3,
+      neurons: 4,
       type: layerTypes.linear,
       id: uuid(),
     },
