@@ -2,6 +2,7 @@ import {
   IoIosAddCircleOutline,
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
+import { v4 as uuid } from "uuid";
 import Neuron from "./Neuron";
 import styles from "../styles/layer.module.scss";
 
@@ -22,8 +23,9 @@ const removeNeuron = (id, layers, updateLayers) => {
 const Layer = (props) => {
   return (
     <div className={styles.layer}>
-      {[...Array(props.layer.neurons)].map((n, index) => {
-        return <Neuron key={index} />;
+      {[...Array(props.layer.neurons)].map((n) => {
+        const id = uuid();
+        return <Neuron key={id} id={id} />;
       })}
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
