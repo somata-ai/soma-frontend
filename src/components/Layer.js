@@ -25,7 +25,7 @@ const Layer = (props) => {
     <div className={styles.layer}>
       {[...Array(props.layer.neurons)].map((n) => {
         const id = uuid();
-        return <Neuron key={id} id={id} />;
+        return <Neuron key={id} id={id} layerNumber={props.layer.number} />;
       })}
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
