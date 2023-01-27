@@ -4,6 +4,10 @@ import ArchitectureView from "./ArchitectureView";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
 import {useState } from "react";
+import SignUP from "../Pages/SignUp";
+import Login from "../Pages/Login"
+import Pages from "./Pages";
+
 
 const Network = (props) => {
   const [layers, setLayers] = useState([
@@ -16,9 +20,16 @@ const Network = (props) => {
   ]);
 
   return (
+    
     <div className={styles.network}>
       <HyperparametersView />
       <ArchitectureView layers={layers} updateLayers={setLayers} />
+      <div className={styles.div}>
+        <SignUP />
+        <Login />
+      </div>
+      <Pages />
+
     </div>
   );
 };
