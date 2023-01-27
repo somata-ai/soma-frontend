@@ -93,6 +93,7 @@ const ArchitectureView = (props) => {
           className={styles.button}
           onClick={() => removeLayer(props.layers, props.updateLayers)}
         />
+        
         {props.layers.length} Hidden
         {props.layers.length > 1 ? " Layers" : " Layer"}
       </div>
@@ -128,7 +129,10 @@ const ArchitectureView = (props) => {
           // />
         );
       })} */}
+
     </div>
+    
+
   );
 };
 
