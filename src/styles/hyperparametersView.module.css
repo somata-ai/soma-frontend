@@ -1,6 +1,6 @@
 .container {
     height: 200px;
-    // border: 1px solid red;
+    /* // border: 1px solid red; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -8,15 +8,16 @@
 }
 
 .card, .epoch {
-    color: black;
+    color: rgb(255, 229, 229);
+    font-weight: 500;
     width: 160px;
     height: 120px;
     display: flex;
     font-size: small;
     flex-direction: column;
     justify-content: space-evenly;
-    // align-items: flex-start;
-    // border: 1px solid red;
+    /* // align-items: flex-start; */
+    /* // border: 1px solid red; */
 }
 
 .card h4 {
@@ -28,7 +29,7 @@
 
 .card_container {
     width: 70%;
-    // border: 1px solid red;
+    /* // border: 1px solid red; */
     display: flex;
     flex-direction: row;  
     justify-content: space-evenly; 
@@ -36,7 +37,7 @@
 
 .epoch {
     width: 100px;
-    // border: 1px solid red;  
+    /* // border: 1px solid red;   */
 }
 
 .buttons_container {

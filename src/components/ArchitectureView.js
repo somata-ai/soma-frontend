@@ -6,7 +6,7 @@ import {
 import React from "react";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
-import styles from "../styles/architectureView.module.scss";
+import styles from "../styles/architectureView.module.css";
 
 const addNeuron = (index, layers, updateLayers) => {
   const updatedLayers = [...layers];
@@ -15,9 +15,11 @@ const addNeuron = (index, layers, updateLayers) => {
 };
 
 const removeNeuron = (index, layers, updateLayers) => {
-  const updatedLayers = [...layers];
-  updatedLayers[index].neurons--;
-  updateLayers(updatedLayers);
+  if (layers[index].neurons > 0) {
+    const updatedLayers = [...layers];
+    updatedLayers[index].neurons--;
+    updateLayers(updatedLayers);
+  }
 };
 
 const addLayer = (layers, updateLayers) => {
@@ -57,7 +59,6 @@ const ArchitectureView = ({ layers, updateLayers }) => {
       svg.setAttribute("width", `${cansvasWidth}`);
       svg.setAttribute("height", `${canvasHeight}`);
       svg.style.display = "block";
-      svg.style.backgroundColor = "lightgray";
 
       // Looping through the layers.
       for (let i = 0; i < layers.length; i++) {
@@ -72,7 +73,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           neuron.setAttribute("cx", `${offset + i * distanceX}`);
           neuron.setAttribute("cy", `${offset + n * distanceY}`);
           neuron.setAttribute("r", neuronDim);
-          neuron.setAttribute("fill", "blue");
+          neuron.setAttribute("fill", "#6a229b");
 
           svg.appendChild(neuron);
 
@@ -88,7 +89,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
               line.setAttribute("y1", neuron.getAttribute("cy"));
               line.setAttribute("x2", `${offset + (i - 1) * distanceX}`);
               line.setAttribute("y2", `${offset + n * distanceY}`);
-              line.setAttribute("stroke", "gray");
+              line.setAttribute("stroke", "#6a229b");
               line.style.display = "block";
 
               svg.appendChild(line);
@@ -103,25 +104,26 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           "x",
           `${offset + i * distanceX - 1.5 * neuronDim}`
         );
-        foreignObject.setAttribute("y", `${offset + n * distanceY}`);
+        foreignObject.setAttribute("y", `${40}`);
         foreignObject.setAttribute("width", "70");
         foreignObject.setAttribute("height", "30");
 
         const buttonsContainer = document.createElement("div");
-        buttonsContainer.style = "border: 1px solid red;";
 
         const add = document.createElement("button");
         const remove = document.createElement("button");
 
         add.textContent = "+";
-        add.style = "width: 30px";
+        add.style =
+          "width: 30px; border-radius: 25%; font-size: large; color: white; background-color: purple; margin-right: 2px";
         add.addEventListener(
           "click",
           addNeuron.bind(this, i, layers, updateLayers)
         );
 
         remove.textContent = "-";
-        remove.style = "width: 30px";
+        remove.style =
+          "width: 30px; border-radius: 25%; font-size: large; color: white; background-color: purple";
         remove.addEventListener(
           "click",
           removeNeuron.bind(this, i, layers, updateLayers)
@@ -139,7 +141,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
   }, [layers]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
           className={styles.button}
@@ -153,7 +155,10 @@ const ArchitectureView = ({ layers, updateLayers }) => {
         {layers.length > 1 ? " Layers" : " Layer"}
       </div>
 
-      <div id="network" className={styles.architectureContainer}></div>
+      <div
+        id="network"
+        className="overflow-auto overflow-y-auto mx-auto mb-10 shadow-zinc-600 shadow-xl w-4/5"
+      ></div>
     </div>
   );
 };

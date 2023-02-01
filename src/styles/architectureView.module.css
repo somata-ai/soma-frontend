@@ -1,7 +1,3 @@
-.container {
-    border: 1px solid yellow;
-}
-
 .buttonsContainer {
     margin: auto;
     display: flex;
@@ -14,13 +10,14 @@
 }
 
 .architectureContainer {
-    height: 500px;
-    width: 1000px;
+    /* height: 500px; */
+    /* width: 1000px; */
     margin: auto;
     overflow: auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    border: 1px dashed green;   
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px purple;
 }
 
 .button {

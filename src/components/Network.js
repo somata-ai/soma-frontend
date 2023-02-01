@@ -1,5 +1,4 @@
 import HyperparametersView from "./HyperparametersView";
-import styles from "../styles/network.module.scss";
 import ArchitectureView from "./ArchitectureView";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
@@ -16,7 +15,7 @@ const Network = (props) => {
   ]);
 
   return (
-    <div className={styles.network}>
+    <div>
       <HyperparametersView />
       <ArchitectureView layers={layers} updateLayers={setLayers} />
     </div>

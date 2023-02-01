@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs";
 import { useEffect } from "react";
 import Header from "./components/Header";
 import Network from "./components/Network";
-import "./styles/app.scss";
+// import "./styles/app.scss";
 
 function App() {
   /**
@@ -15,12 +15,12 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Header>
+    <div className="">
+      {/* <Header>
         <h1>
           A Neural Network Sandbox on <br></br>your Web Browser
         </h1>
-      </Header>
+      </Header> */}
       <Network />
     </div>
   );

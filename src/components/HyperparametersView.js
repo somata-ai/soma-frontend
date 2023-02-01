@@ -2,7 +2,7 @@ import { testTensorFlow } from "../models/model";
 import { useState } from "react";
 import { HiPlay } from "react-icons/hi2";
 import { BsArrowCounterclockwise } from "react-icons/bs";
-import styles from "../styles/hyperparametersView.module.scss";
+import styles from "../styles/hyperparametersView.module.css";
 import DropdownMenu from "./DropdownMenu";
 
 const options = {
