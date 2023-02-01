@@ -3,12 +3,12 @@ import styles from "../styles/network.module.scss";
 import ArchitectureView from "./ArchitectureView";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
-import {useState } from "react";
+import { useState } from "react";
 
 const Network = (props) => {
   const [layers, setLayers] = useState([
     {
-      neurons: 1,
+      neurons: 2,
       type: layerTypes.linear,
       id: uuid(),
       number: 1,

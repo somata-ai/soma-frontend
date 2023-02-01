@@ -1,32 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   IoIosAddCircleOutline,
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
+import React from "react";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
-import Xarrow from "react-xarrows";
-import Layer from "./Layer";
 import styles from "../styles/architectureView.module.scss";
 
-const renderArrows = () => {
-  const n1 = document.querySelectorAll('div[data-layer="1"]');
-  const n2 = document.querySelectorAll('div[data-layer="2"]');
-  const arrows = [];
+const addNeuron = (index, layers, updateLayers) => {
+  const updatedLayers = [...layers];
+  updatedLayers[index].neurons++;
+  updateLayers(updatedLayers);
+};
 
-  for (let i = 0; i < n1.length; i++) {
-    for (let j = 0; j < n2.length; j++) {
-      arrows.push({
-        start: n1[i].getAttribute("id"),
-        end: n2[j].getAttribute("id"),
-      });
-    }
-  }
-
-  console.log(n1);
-  console.log(n2);
-  console.log(arrows);
-  return arrows;
+const removeNeuron = (index, layers, updateLayers) => {
+  const updatedLayers = [...layers];
+  updatedLayers[index].neurons--;
+  updateLayers(updatedLayers);
 };
 
 const addLayer = (layers, updateLayers) => {
@@ -44,90 +35,125 @@ const removeLayer = (layers, updateLayers) => {
   updateLayers([...layers]);
 };
 
-const TestComponent = (props) => {
-  const [arrows, setArrows] = useState([]);
-
+const ArchitectureView = ({ layers, updateLayers }) => {
   useEffect(() => {
-    const newArrows = renderArrows();
-    console.log(newArrows);
-    setArrows(newArrows);
-  }, [props.layers]);
+    const renderLayers = () => {
+      const network = document.getElementById("network");
 
-  return (
-    <>
-      {arrows.map((arrow) => {
-        return (
-          <Xarrow
-            start={arrow.start}
-            end={arrow.end}
-            showHead={false}
-            startAnchor={"right"}
-            endAnchor={"left"}
-            strokeWidth="1"
-            path={"straight"}
-            animateDrawing={true}
-          />
+      network.childNodes.forEach((element) => {
+        network.removeChild(element);
+      });
+
+      const offset = 100;
+      const distanceY = 50;
+      const distanceX = 150;
+      const neuronDim = 20;
+      const cansvasWidth = 1000 * Math.ceil(layers.length / 6);
+      const canvasHeight = 500;
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("id", "svg");
+      svg.setAttribute("viewBox", `0 0 ${cansvasWidth} ${canvasHeight}`);
+      svg.setAttribute("width", `${cansvasWidth}`);
+      svg.setAttribute("height", `${canvasHeight}`);
+      svg.style.display = "block";
+      svg.style.backgroundColor = "lightgray";
+
+      // Looping through the layers.
+      for (let i = 0; i < layers.length; i++) {
+        // Looping through neurons for each layer.
+        let n;
+        for (n = 0; n < layers[i].neurons; n++) {
+          const neuron = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+
+          neuron.setAttribute("cx", `${offset + i * distanceX}`);
+          neuron.setAttribute("cy", `${offset + n * distanceY}`);
+          neuron.setAttribute("r", neuronDim);
+          neuron.setAttribute("fill", "blue");
+
+          svg.appendChild(neuron);
+
+          // For each neuron in second layer and beyound.
+          if (i > 0) {
+            // For each neuron of previous layer.
+            for (let n = 0; n < layers[i - 1].neurons; n++) {
+              const line = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+              );
+              line.setAttribute("x1", neuron.getAttribute("cx"));
+              line.setAttribute("y1", neuron.getAttribute("cy"));
+              line.setAttribute("x2", `${offset + (i - 1) * distanceX}`);
+              line.setAttribute("y2", `${offset + n * distanceY}`);
+              line.setAttribute("stroke", "gray");
+              line.style.display = "block";
+
+              svg.appendChild(line);
+            }
+          }
+        }
+        const foreignObject = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "foreignObject"
         );
-      })}
-    </>
-  );
-};
+        foreignObject.setAttribute(
+          "x",
+          `${offset + i * distanceX - 1.5 * neuronDim}`
+        );
+        foreignObject.setAttribute("y", `${offset + n * distanceY}`);
+        foreignObject.setAttribute("width", "70");
+        foreignObject.setAttribute("height", "30");
 
-const ArchitectureView = (props) => {
-  // const [arrows, setArrows] = useState([]);
+        const buttonsContainer = document.createElement("div");
+        buttonsContainer.style = "border: 1px solid red;";
 
-  // useEffect(() => {
-  //   const newArrows = renderArrows();
-  //   console.log(newArrows);
-  //   // setArrows(newArrows);
-  // }, [props.layers]);
+        const add = document.createElement("button");
+        const remove = document.createElement("button");
+
+        add.textContent = "+";
+        add.style = "width: 30px";
+        add.addEventListener(
+          "click",
+          addNeuron.bind(this, i, layers, updateLayers)
+        );
+
+        remove.textContent = "-";
+        remove.style = "width: 30px";
+        remove.addEventListener(
+          "click",
+          removeNeuron.bind(this, i, layers, updateLayers)
+        );
+
+        buttonsContainer.append(add, remove);
+        foreignObject.appendChild(buttonsContainer);
+        svg.appendChild(foreignObject);
+      }
+
+      network.appendChild(svg);
+    };
+
+    renderLayers();
+  }, [layers]);
 
   return (
     <div className={styles.container}>
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
           className={styles.button}
-          onClick={() => addLayer(props.layers, props.updateLayers)}
+          onClick={() => addLayer(layers, updateLayers)}
         />
         <IoIosRemoveCircleOutline
           className={styles.button}
-          onClick={() => removeLayer(props.layers, props.updateLayers)}
+          onClick={() => removeLayer(layers, updateLayers)}
         />
-        {props.layers.length} Hidden
-        {props.layers.length > 1 ? " Layers" : " Layer"}
+        {layers.length} Hidden
+        {layers.length > 1 ? " Layers" : " Layer"}
       </div>
 
-      <div className={styles.architectureContainer}>
-        {props.layers.map((layer) => {
-          return (
-            <Layer
-              key={layer.id}
-              layer={layer}
-              layers={props.layers}
-              updateLayers={props.updateLayers}
-            />
-          );
-        })}
-      </div>
-
-      <TestComponent layers={props.layers} />
-
-      {/* {arrows.map((arrow) => {
-        return (
-          <div>
-            hello
-            <p>{arrow.start}</p>
-          </div>
-          // <Xarrow
-          //   start={arrow.start}
-          //   end={arrow.end}
-          //   showHead={false}
-          //   startAnchor={"bottom"}
-          //   strokeWidth="1"
-          //   path={"straight"}
-          // />
-        );
-      })} */}
+      <div id="network" className={styles.architectureContainer}></div>
     </div>
   );
 };

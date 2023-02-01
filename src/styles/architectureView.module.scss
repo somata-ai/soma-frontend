@@ -17,11 +17,10 @@
     height: 500px;
     width: 1000px;
     margin: auto;
-    display: flex;
-    overflow-x: auto;
+    overflow: auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    border: 1px solid green;   
+    border: 1px dashed green;   
 }
 
 .button {
