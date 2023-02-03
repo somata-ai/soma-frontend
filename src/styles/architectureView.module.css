@@ -6,7 +6,7 @@
     width: fit-content;
     color: black;
     font-size: large;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 .architectureContainer {
@@ -21,6 +21,6 @@
 }
 
 .button {
-    color: teal;
+    color: purple;
     font-size: 30px;
 }

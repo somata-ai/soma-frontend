@@ -15,9 +15,14 @@ const addNeuron = (index, layers, updateLayers) => {
 };
 
 const removeNeuron = (index, layers, updateLayers) => {
-  if (layers[index].neurons > 0) {
+  if (layers[index].neurons > 1) {
     const updatedLayers = [...layers];
     updatedLayers[index].neurons--;
+    updateLayers(updatedLayers);
+  }
+  else if (layers[index].neurons === 1) {
+    const updatedLayers = [...layers];
+    updatedLayers.splice(index, 1);
     updateLayers(updatedLayers);
   }
 };
@@ -109,13 +114,13 @@ const ArchitectureView = ({ layers, updateLayers }) => {
         foreignObject.setAttribute("height", "30");
 
         const buttonsContainer = document.createElement("div");
-
+    
         const add = document.createElement("button");
         const remove = document.createElement("button");
 
         add.textContent = "+";
         add.style =
-          "width: 30px; border-radius: 25%; font-size: large; color: white; background-color: purple; margin-right: 2px";
+          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: purple; margin-right: 2px";
         add.addEventListener(
           "click",
           addNeuron.bind(this, i, layers, updateLayers)
@@ -123,7 +128,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
 
         remove.textContent = "-";
         remove.style =
-          "width: 30px; border-radius: 25%; font-size: large; color: white; background-color: purple";
+          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: purple";
         remove.addEventListener(
           "click",
           removeNeuron.bind(this, i, layers, updateLayers)
