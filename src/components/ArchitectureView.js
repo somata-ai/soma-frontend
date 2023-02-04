@@ -63,6 +63,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
       svg.setAttribute("width", `${canvasWidth}`);
       svg.setAttribute("height", `${canvasHeight}`);
       svg.style.display = "block";
+      // svg.style.border = "1px solid red";
 
       // Looping through the layers.
       for (let i = 0; i < layers.length; i++) {
