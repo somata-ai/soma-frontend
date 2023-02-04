@@ -7,7 +7,7 @@ import { useState } from "react";
 const Network = (props) => {
   const [layers, setLayers] = useState([
     {
-      neurons: 2,
+      neurons: 1,
       type: layerTypes.linear,
       id: uuid(),
       number: 1,
