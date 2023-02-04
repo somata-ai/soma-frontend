@@ -16,11 +16,7 @@ function App() {
 
   return (
     <div className="">
-      {/* <Header>
-        <h1>
-          A Neural Network Sandbox on <br></br>your Web Browser
-        </h1>
-      </Header> */}
+      <Header></Header>
       <Network />
     </div>
   );
