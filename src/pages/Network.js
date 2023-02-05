@@ -1,5 +1,5 @@
-import HyperparametersView from "./HyperparametersView";
-import ArchitectureView from "./ArchitectureView";
+import HyperparametersView from "../components/HyperparametersView";
+import ArchitectureView from "../components/ArchitectureView";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
 import { useState } from "react";
