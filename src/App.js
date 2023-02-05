@@ -1,6 +1,8 @@
 import * as tf from "@tensorflow/tfjs";
 import { useEffect } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
+import Dashboard from "./pages/Dashboard";
 import Network from "./pages/Network";
 // import "./styles/app.scss";
 
@@ -17,7 +19,11 @@ function App() {
   return (
     <div className="">
       <Header></Header>
-      <Network />
+      <Routes>
+        <Route path="/" element={<Navigate to="/model" replace />} />
+        <Route path="/model" element={<Network />} />
+        <Route path="/profile" element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }
