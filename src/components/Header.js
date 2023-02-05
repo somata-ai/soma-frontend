@@ -16,7 +16,7 @@ const Header = (props) => {
               Login
             </div>
           </NavLink>
-          <NavLink to={"/login"}>
+          <NavLink to={"/SignUp"}>
             <div className="text-white transition ease-in hover:scale-110 duration-200">
               SignUp
             </div>
