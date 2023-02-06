@@ -14,7 +14,7 @@ const Dashboard = () => {
           Description will go here. Description will go here. Description will
           go here. Description will go here . Description will go here.
         </p>
-        <button className=" w-64 h-8 mt-6 bg-purple-400 text-white text-md hover:bg-purple-500 rounded">
+        <button className=" w-64 h-8 mt-6 bg-purple-400 text-white text-md hover:bg-purple-900 rounded">
           Edit Profile
         </button>
         <hr className="mt-5 bg-gray-400 h-0.5" style={{ width: "80%" }}></hr>

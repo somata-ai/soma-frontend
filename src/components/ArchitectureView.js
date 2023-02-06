@@ -128,7 +128,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
 
         add.textContent = "+";
         add.style =
-          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: purple; margin-right: 2px";
+          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: rgb(96 165 250); margin-right: 2px";
         add.addEventListener(
           "click",
           addNeuron.bind(this, i, layers, updateLayers)
@@ -136,7 +136,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
 
         remove.textContent = "-";
         remove.style =
-          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: purple";
+          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color:  rgb(96 165 250)";
         remove.addEventListener(
           "click",
           removeNeuron.bind(this, i, layers, updateLayers)
@@ -157,11 +157,11 @@ const ArchitectureView = ({ layers, updateLayers }) => {
     <div>
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
-          className={styles.button}
+          className={styles.button + " text-blue-400"}
           onClick={() => addLayer(layers, updateLayers)}
         />
         <IoIosRemoveCircleOutline
-          className={styles.button}
+          className={styles.button + " text-blue-400"}
           onClick={() => removeLayer(layers, updateLayers)}
         />
         {layers.length} Hidden
@@ -171,7 +171,10 @@ const ArchitectureView = ({ layers, updateLayers }) => {
       <div
         id="network"
         className="overflow-auto overflow-y-auto mx-auto mb-10 shadow-zinc-600 shadow-xl w-4/5"
-        style={{ height: "500px" }}
+        style={{
+          height: "500px",
+          backgroundImage: "linear-gradient(to top right, pink, pink, indigo)",
+        }}
       ></div>
     </div>
   );
