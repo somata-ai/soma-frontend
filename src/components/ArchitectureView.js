@@ -86,7 +86,10 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           neuron.setAttribute("cx", `${offsetx + i * distanceX}`);
           neuron.setAttribute("cy", `${offset + n * distanceY}`);
           neuron.setAttribute("r", neuronDim);
-          neuron.setAttribute("fill", "#6a229b");
+          // neuron.setAttribute("fill", "#6a229b");
+          neuron.setAttribute("fill", "white");
+          neuron.setAttribute("stroke", "#6a229b");
+          neuron.setAttribute("stroke-width", "2");
 
           svg.appendChild(neuron);
 
@@ -98,9 +101,12 @@ const ArchitectureView = ({ layers, updateLayers }) => {
                 "http://www.w3.org/2000/svg",
                 "line"
               );
-              line.setAttribute("x1", neuron.getAttribute("cx"));
+              line.setAttribute("x1", neuron.getAttribute("cx") - neuronDim);
               line.setAttribute("y1", neuron.getAttribute("cy"));
-              line.setAttribute("x2", `${offsetx + (i - 1) * distanceX}`);
+              line.setAttribute(
+                "x2",
+                `${offsetx + (i - 1) * distanceX + neuronDim}`
+              );
               line.setAttribute("y2", `${offset + n * distanceY}`);
               line.setAttribute("stroke", "#6a229b");
               line.style.display = "block";
@@ -170,11 +176,8 @@ const ArchitectureView = ({ layers, updateLayers }) => {
 
       <div
         id="network"
-        className="overflow-auto overflow-y-auto mx-auto mb-10 shadow-zinc-600 shadow-xl w-4/5"
-        style={{
-          height: "500px",
-          backgroundImage: "linear-gradient(to top right, pink, pink, indigo)",
-        }}
+        className="overflow-auto overflow-y-auto mx-auto mb-10 w-4/5"
+        style={{ height: "500px" }}
       ></div>
     </div>
   );

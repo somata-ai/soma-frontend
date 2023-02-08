@@ -24,8 +24,8 @@ const HyperparametersView = (props) => {
       </div>
 
       <div className={styles.epoch}>
-        <h4 className="text-purple-900" >Epoch</h4>
-        <p className="text-purple-900">000,000</p>
+        <h4>Epoch</h4>
+        <p>000,000</p>
       </div>
       <div className={styles.card_container}>
         <Card title="Learning Rate" options={options.rateOptions}></Card>
@@ -44,7 +44,7 @@ const Card = (props) => {
   );
 
   return (
-    <div className={styles.card + " text-purple-900"}>
+    <div className={styles.card}>
       <h4>{props.title}</h4>
       <DropdownMenu title={selected}>
         {props.options

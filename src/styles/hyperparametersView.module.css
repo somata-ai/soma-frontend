@@ -1,6 +1,5 @@
 .container {
     height: 200px;
-    /* // border: 1px solid red; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -15,8 +14,6 @@
     font-size: small;
     flex-direction: column;
     justify-content: space-evenly;
-    /* // align-items: flex-start; */
-    /* // border: 1px solid red; */
 }
 
 .card h4 {
@@ -28,7 +25,6 @@
 
 .card_container {
     width: 70%;
-    /* // border: 1px solid red; */
     display: flex;
     flex-direction: row;  
     justify-content: space-evenly; 
@@ -36,7 +32,6 @@
 
 .epoch {
     width: 100px;
-    /* // border: 1px solid red;   */
 }
 
 .buttons_container {
