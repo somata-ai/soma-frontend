@@ -19,7 +19,7 @@ const LoginPage = () => {
         }}
         className="flex h-screen items-center"
       >
-        <div className="bg-slate-50 container mx-auto py-6 w-96 h-4/6 shadow-lg rounded-md p-1">
+        <div className="bg-slate-50 container mx-auto py-6 w-96 max-h-max shadow-lg rounded-md p-1">
           <form className="grid justify-center" onSubmit={handleSubmit}>
             <h1 className="text-4xl text-purple-500 mx-auto mb-5">
               Login to SOMA
@@ -29,7 +29,7 @@ const LoginPage = () => {
             <input
               className="rounded-md p-1 mx-auto shadow-md w-full h-8"
               type="email"
-              placeholder="e.g talha"
+              placeholder="e.g talhahaha"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
