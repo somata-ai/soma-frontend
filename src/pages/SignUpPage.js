@@ -20,7 +20,7 @@ const SignUpPage = () => {
     <div>
       <Header />
       <div style={{backgroundColor: 'rgba(255, 255, 255, 0.75)'}} className="flex items-center h-screen" >
-      <div className="bg-slate-50 container mx-auto py-6 w-96 h-4/6 shadow-lg rounded-md p-1">
+      <div className="bg-slate-50 container mx-auto py-6 w-96 max-h-max shadow-lg rounded-md p-1">
         <form className="grid justify-center" onSubmit={handleSubmit}>
           <h1 className="text-4xl text-purple-500 mx-auto mb-5">
             SignUp for SOMA
