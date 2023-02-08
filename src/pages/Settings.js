@@ -99,7 +99,7 @@ const Settings = () => {
         <div>
             <div style={{backgroundColor: "rgba(255, 255, 255, 0.90)",}} className="flex h-screen items-center">
                 <div className="ml-28 mr-28 text-[#a454fc]">
-                    <div className="absolute">
+                    <div>
                         <h2 className=" text-4xl text-black-500 mx-auto mb-5 font-serif">Public Profile</h2>
                         <div className="font-mono">
                             <form className=" ml-28">
