@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Network from "./pages/Network";
-// import "./styles/app.scss";
+import Settings from "./pages/Settings";
 
 function App() {
   /**
@@ -23,6 +23,7 @@ function App() {
         <Route path="/" element={<Navigate to="/model" replace />} />
         <Route path="/model" element={<Network />} />
         <Route path="/profile" element={<Dashboard />} />
+        <Route path="/setting" element={<Settings />} />
       </Routes>
     </div>
   );
