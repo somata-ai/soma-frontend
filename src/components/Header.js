@@ -27,6 +27,11 @@ const Header = (props) => {
         </div>
       ) : (
         <div className="flex justify-evenly w-1/6 ml-auto mr-5">
+          <NavLink to={"/model"}>
+            <div className="text-white transition ease-in hover:scale-110 duration-200">
+              Create
+            </div>
+          </NavLink>
           <NavLink to={"/login"}>
             <div className="text-white transition ease-in hover:scale-110 duration-200">
               Login
