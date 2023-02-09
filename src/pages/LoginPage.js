@@ -1,13 +1,36 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import { useAuth } from "../context/auth";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const auth = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    console.log(email, password);
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState(false);
+
+  const clearError = () => setErr(false);
+
+  const showError = () => {
+    setErr(true);
+    setTimeout(clearError, 3000);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (name !== "test" || password !== "abc") {
+      showError();
+      return;
+    } else {
+      auth.login("test");
+      localStorage.setItem("user", "test");
+      setErr(false);
+      navigate("/profile", { replace: true });
+    }
   };
 
   return (
@@ -20,21 +43,19 @@ const LoginPage = () => {
         className="flex h-screen items-center"
       >
         <div className="bg-slate-50 container mx-auto py-6 w-96 max-h-max shadow-lg rounded-md p-1">
-          <form className="grid justify-center" onSubmit={handleSubmit}>
+          <form className="grid justify-center">
             <h1 className="text-4xl text-purple-500 mx-auto mb-5">
               Login to SOMA
             </h1>
             <br />
             <label className="text-[#a454fc] mb-1">Username</label>
             <input
-              className="rounded-md p-1 mx-auto shadow-md w-full h-8"
+              className="rounded-md p-1 mx-auto mb-8 shadow-md w-full h-8"
               type="email"
               placeholder="e.g talhahaha"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-            <br />
-            <br />
             <label className="text-[#a454fc] mb-1">Password</label>
             <input
               className="rounded-md p-1 mx-auto shadow-md w-full h-8"
@@ -43,20 +64,20 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <br />
-            <br />
+            {err ? (
+              <div className="text-red-500 mx-auto mt-2">
+                Incorrect Username or Password
+              </div>
+            ) : (
+              ""
+            )}
             <button
-              className="bg-purple-800 hover:bg-purple-900 font-sans text-xl text-white rounded-lg w-80 h-8 mb-5"
-              type="submit"
-              onSubmit={() => handleSubmit()}
+              className="bg-purple-900 hover:bg-purple-800 mt-10 font-sans text-xl text-white rounded-lg w-80 h-12 mb-5"
+              onClick={(e) => handleSubmit(e)}
             >
               Log in
             </button>
-            <button
-              className="bg-purple-800 hover:bg-purple-900 font-sans text-xl text-white rounded-lg w-80 h-8"
-              type="submit"
-              onSubmit={() => handleSubmit()}
-            >
+            <button className="bg-purple-800 hover:bg-purple-900 font-sans text-xl text-white rounded-lg w-80 h-12">
               Continue with Google
             </button>
           </form>
