@@ -96,11 +96,11 @@ const Settings = () => {
     }
 
     return (
-        <div>
-            <div style={{backgroundColor: "rgba(255, 255, 255, 0.90)",}} className="flex h-screen items-center">
-                <div className="ml-28 mr-28 text-[#a454fc]">
+        // <div className="font-sans md:font">
+            <div style={{backgroundColor: "rgba(255, 255, 255, 0.70)",}} className="flex items-center">
+                <div className="ml-28 mr-28">
                     <div>
-                        <h2 className=" text-4xl text-black-500 mx-auto mb-5 font-serif">Public Profile</h2>
+                        <h2 className=" text-4xl text-black-500 mx-auto mb-5 font-serif" style={{ fontFamily: 'Inter', }}>Public Profile</h2>
                         <div className="font-mono">
                             <form className=" ml-28">
                                 <div className="flex flex-column max-w-full">
@@ -184,7 +184,7 @@ const Settings = () => {
                                 </div>
 
                                 <button 
-                                    className="bg-[#a454fc] font-mono text-xl text-white rounded-lg mt-1 ml-96 w-44 h-10" 
+                                    className="bg-purple-800 hover:bg-purple-900  font-mono text-xl text-white rounded-lg mt-1 ml-96 w-44 h-10" 
                                     type="submit">
                                     Update Profile
                                 </button>
@@ -193,7 +193,7 @@ const Settings = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        // </div>
     );
 }
 export default Settings;
