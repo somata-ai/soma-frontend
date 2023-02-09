@@ -48,7 +48,9 @@ const LoginPage = () => {
               Login to SOMA
             </h1>
             <br />
-            <label className="text-[#a454fc] mb-1">Username</label>
+            <label className="text-[#a454fc] mb-1">
+              Username <span className="text-red-400">*</span>
+            </label>
             <input
               className="rounded-md p-1 mx-auto mb-8 shadow-md w-full h-8"
               type="email"
@@ -56,7 +58,9 @@ const LoginPage = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <label className="text-[#a454fc] mb-1">Password</label>
+            <label className="text-[#a454fc] mb-1">
+              Password <span className="text-red-400">*</span>
+            </label>
             <input
               className="rounded-md p-1 mx-auto shadow-md w-full h-8"
               type="password"
