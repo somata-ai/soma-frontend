@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import ModalCard from "../components/ModelCard";
 import ProfilePicture from "../components/ProfilePicture";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white flex min-h-screen">
       <div
@@ -14,7 +17,10 @@ const Dashboard = () => {
           Description will go here. Description will go here. Description will
           go here. Description will go here . Description will go here.
         </p>
-        <button className=" w-64 h-8 mt-6 bg-purple-400 text-white text-md hover:bg-purple-900 rounded">
+        <button
+          className="w-64 h-8 mt-6 bg-purple-900 text-white text-md hover:bg-purple-800 rounded"
+          onClick={() => navigate("/settings", { replace: true })}
+        >
           Edit Profile
         </button>
         <hr className="mt-5 bg-gray-400 h-0.5" style={{ width: "80%" }}></hr>

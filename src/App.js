@@ -23,7 +23,7 @@ function App() {
         <Route path="/" element={<Navigate to="/model" replace />} />
         <Route path="/model" element={<Network />} />
         <Route path="/profile" element={<Dashboard />} />
-        <Route path="/setting" element={<Settings />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
   );
