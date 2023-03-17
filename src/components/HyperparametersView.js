@@ -1,4 +1,4 @@
-import { testTensorFlow } from "../models/model";
+import { testTensorFlow, myModel } from "../models/model";
 import { useState } from "react";
 import { HiPlay } from "react-icons/hi2";
 import { BsArrowCounterclockwise } from "react-icons/bs";
@@ -18,7 +18,7 @@ const HyperparametersView = (props) => {
       <div className={styles.buttons_container}>
         <BsArrowCounterclockwise className={styles.reset_button} />
         <div className={styles.start_button}>
-          <HiPlay onClick={() => testTensorFlow()} />
+          <HiPlay onClick={() => myModel()} />
         </div>
         {/* <div>ne</div> */}
       </div>
