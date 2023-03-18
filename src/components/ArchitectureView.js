@@ -173,7 +173,9 @@ const ArchitectureView = ({ layers, updateLayers }) => {
         {layers.length} Hidden
         {layers.length > 1 ? " Layers" : " Layer"}
       </div>
-
+      <p className="mx-auto w-fit text-sm text-gray-500">
+        Input/Output layers are handled by default
+      </p>
       <div
         id="network"
         className="overflow-auto overflow-y-auto mx-auto mb-10 w-4/5"
