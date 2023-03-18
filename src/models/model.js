@@ -75,6 +75,7 @@ export const myModel = async (layers, hyperparameters) => {
     callbacks: {
       onEpochEnd: async (epoch, logs) => {
         console.log(epoch, logs.loss);
+        document.getElementById("epoch").textContent = zeroPadNumber(epoch, 6);
       },
     },
   });
@@ -88,3 +89,5 @@ export const testTensorFlow = () => {
   ]);
   console.log(t.shape.toString());
 };
+
+const zeroPadNumber = (num, places) => String(num).padStart(places, "0");

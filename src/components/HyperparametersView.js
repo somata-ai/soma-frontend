@@ -25,23 +25,26 @@ const HyperparametersView = (props) => {
     <div className={styles.container}>
       <div className={styles.buttons_container}>
         <BsArrowCounterclockwise className={styles.reset_button} />
-        <div className={styles.start_button}>
-          <HiPlay
-            onClick={() =>
-              myModel(props.layers, {
-                learningRate: learningRate.current,
-                activation: activation.current,
-                optimizer: optimizer.current,
-              })
-            }
-          />
+        <div
+          className={styles.start_button}
+          onClick={() =>
+            myModel(props.layers, {
+              learningRate: learningRate.current,
+              activation: activation.current,
+              optimizer: optimizer.current,
+            })
+          }
+        >
+          <HiPlay />
         </div>
         {/* <div>ne</div> */}
       </div>
 
       <div className={styles.epoch}>
         <h4>Epoch</h4>
-        <p>000,000</p>
+        <p id="epoch" className="text-lg">
+          000000
+        </p>
       </div>
       <div className={styles.card_container}>
         <Card
