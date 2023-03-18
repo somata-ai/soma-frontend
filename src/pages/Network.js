@@ -16,8 +16,13 @@ const Network = (props) => {
   ]);
 
   return (
-    <div style={{ border: "1px solid transparent", backgroundColor: 'rgba(255, 255, 255, 0.75)' }}>
-      <HyperparametersView />
+    <div
+      style={{
+        border: "1px solid transparent",
+        backgroundColor: "rgba(255, 255, 255, 0.75)",
+      }}
+    >
+      <HyperparametersView layers={layers} />
       <ArchitectureView layers={layers} updateLayers={setLayers} />
     </div>
   );

@@ -18,14 +18,12 @@ const loadData = async () => {
     },
   });
   // Number of features is the number of column names minus one for the label
-  // column.
   const numOfFeatures = (await csvDataset.columnNames()).length - 1;
 
   // Prepare the Dataset for training.
   const flattenedDataset = csvDataset
     .map(({ xs, ys }) => {
-      // Convert xs(features) and ys(labels) from object form (keyed by column
-      // name) to array form.
+      // Convert xs(features) and ys(labels) from object form (keyed by column name) to array form.
       return { xs: Object.values(xs), ys: Object.values(ys) };
     })
     .batch(10);
@@ -34,66 +32,42 @@ const loadData = async () => {
   return { flattenedDataset, numOfFeatures };
 };
 
-const setupModel = (numOfFeatures) => {
-
-  const activation = "relu";
-  const regularization = "l2";
-  const problemType = "classification";
-  const layers = [
-    {
-      neurons: 2,
-      type: layerTypes.linear,
-    },
-    {
-      neurons: 4,
-      type: layerTypes.linear
-    },
-    {
-      neurons: 40,
-      type: layerTypes.linear
-    },
-    
-    {
-      neurons: 1,
-      type: layerTypes.linear,
-    },
-  ];
-
+const setupModel = (layers, numOfFeatures, hyperparameters) => {
   // Define the model.
   const model = tf.sequential();
   model.add(
     tf.layers.dense({
       inputShape: [numOfFeatures],
-      activation: activation,
+      activation: hyperparameters.activation,
       units: 1,
     })
   );
-  
-  layers.forEach(layer => {
-    model.add(
-    tf.layers.dense({
-      activation: activation,
-      units: layer.neurons,
-    })
-  );
-  }) 
 
-   
-  model.compile({
-    optimizer: tf.train.sgd(0.000001),
-    loss: "meanSquaredError",
+  layers.forEach((layer) => {
+    model.add(
+      tf.layers.dense({
+        activation: hyperparameters.activation,
+        units: layer.neurons,
+      })
+    );
   });
 
+  model.compile({
+    optimizer: tf.train[hyperparameters.optimizer](
+      Number(hyperparameters.learningRate)
+    ),
+    loss: "meanSquaredError",
+  });
 
   return model;
 };
 
-export const myModel = async () => {
-  
+export const myModel = async (layers, hyperparameters) => {
   const { flattenedDataset, numOfFeatures } = await loadData();
-  const model = setupModel(numOfFeatures);
+  const model = setupModel(layers, numOfFeatures, hyperparameters);
 
-  console.log(model.toJSON())
+  console.log(hyperparameters);
+  console.log(model.summary());
 
   // Fit the model using the prepared Dataset
   return model.fitDataset(flattenedDataset, {
@@ -104,8 +78,6 @@ export const myModel = async () => {
       },
     },
   });
-
-  console.log("done");
 };
 
 // This function is called on clicking the start button.
