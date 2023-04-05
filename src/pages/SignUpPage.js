@@ -1,29 +1,48 @@
 import React from "react";
 import { useState } from "react";
 import Header from "../components/Header";
+import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
+
 
 const SignUpPage = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [err, setErr] = useState(false);
+  const [errPass, setErr] = useState(false);
+  const [errName, setErrName] = useState(false);
 
   const clearError = () => setErr(false);
+  const clearErrName = () => setErrName(false);
 
   const showError = () => {
     setErr(true);
     setTimeout(clearError, 3000);
   };
 
+  const showErrorName = () => {
+    setErrName(true);
+    setTimeout(clearErrName, 3000);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name === "" || password === "" || confirmPassword === "") {
+    if (name === "" && password === "" && confirmPassword === "") {
       showError();
     } else if (password !== confirmPassword) {
       showError();
+    } else if (name === ""){
+      showErrorName();
     } else {
-      return;
+      auth.login(name);
+      localStorage.setItem("user", name);
+      setErr(false);
+      navigate("/settings", { replace: true });
     }
   };
 
@@ -64,12 +83,12 @@ const SignUpPage = () => {
             </label>
             <input
               className="rounded-md p-1 shadow-md w-full h-8 mx-auto"
-              type="confirmPassword"
+              type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {err ? (
+            {errPass ? (
               <div className="text-red-500 mx-auto mt-2">
                 Password and Confirm password must match.<br></br>
                 Required fields marked with *
@@ -77,6 +96,14 @@ const SignUpPage = () => {
             ) : (
               ""
             )}
+            {errName ? (
+              <div className="text-red-500 mx-auto mt-2">
+                Username cannot be empty.
+              </div>
+            ) : (
+              ""
+            )}
+
             <button
               className="bg-purple-900 hover:bg-purple-800 mt-10 font-sans text-2xl text-white rounded-lg w-80 h-12 mb-5"
               onClick={(e) => handleSubmit(e)}
