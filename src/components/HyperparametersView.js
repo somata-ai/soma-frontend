@@ -1,9 +1,10 @@
-import { myModel } from "../models/model";
+import { myModel, run, watchTraining } from "../models/model";
 import { useState, useRef } from "react";
 import { HiPlay } from "react-icons/hi2";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import styles from "../styles/hyperparametersView.module.css";
 import DropdownMenu from "./DropdownMenu";
+import * as tfvis from "@tensorflow/tfjs-vis";
 
 const options = {
   rateOptions: [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10],
@@ -27,13 +28,14 @@ const HyperparametersView = (props) => {
         <BsArrowCounterclockwise className={styles.reset_button} />
         <div
           className={styles.start_button}
-          onClick={() =>
+          onClick={() => {
             myModel(props.layers, {
               learningRate: learningRate.current,
               activation: activation.current,
               optimizer: optimizer.current,
-            })
-          }
+            });
+            run();
+          }}
         >
           <HiPlay />
         </div>
@@ -45,6 +47,23 @@ const HyperparametersView = (props) => {
         <p id="epoch" className="text-lg">
           000000
         </p>
+      </div>
+      <div>
+        <button
+          id="show-graphs"
+          className="border border-black p-2 hover:bg-purple-200"
+          onClick={() => {
+            tfvis.visor().toggle();
+            // const surface = tfvis
+            //   .visor()
+            //   .surface({ name: "My First Surface", tab: "Input Data" });
+
+            // const drawArea = surface.drawArea;
+          }}
+        >
+          {" "}
+          Show graphs
+        </button>
       </div>
       <div className={styles.card_container}>
         <Card
