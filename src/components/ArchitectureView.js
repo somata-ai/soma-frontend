@@ -20,6 +20,7 @@ const removeLayer = (layers, updateLayers) => {
 
 const ArchitectureView = ({ layers, updateLayers }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [denseLayer, setDenseLayer] = useState(false);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
@@ -60,13 +61,22 @@ const ArchitectureView = ({ layers, updateLayers }) => {
       default:
         newLayer = {
           neurons: 1,
-          type: layerTypes.linear,
+          type: layerTypes.dense,
           id: uuid(),
           number: layers.length + 1,
         };
         break;
     }
     updateLayers([...layers, newLayer]);
+  };
+
+  const findDenseLayer = () => {
+    for (let i = layers.length - 1; i > -1; i--) {
+      if (layers[i].type === "dense") {
+        return true;
+      }
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -85,19 +95,19 @@ const ArchitectureView = ({ layers, updateLayers }) => {
       svg.setAttribute("width", `${canvasWidth}`);
       svg.setAttribute("height", `${canvasHeight}`);
       svg.style.display = "block";
-      svg.style.border = "1px solid red";
+      // svg.style.border = "1px solid red";
 
       // Looping through the layers.
       for (let i = 0; i < layers.length; i++) {
         switch (layers[i].type) {
           case "conv2d":
-            renderConv2dLayer();
+            renderConv2dLayer(svg, i, layers[i].num_of_kernels);
             break;
           case "maxPool2d":
-            renderPoolLayer();
+            renderPoolLayer(svg, i);
             break;
           case "avgPool2d":
-            renderPoolLayer();
+            renderPoolLayer(svg, i);
             break;
           default:
             renderDenseLayer(svg, layers, updateLayers, i);
@@ -111,19 +121,27 @@ const ArchitectureView = ({ layers, updateLayers }) => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} addLayer={addLayer} onClose={closeModal} />
+      <Modal
+        isOpen={isOpen}
+        addLayer={addLayer}
+        onClose={closeModal}
+        denseLayer={denseLayer}
+        setDenseLayer={setDenseLayer}
+      />
 
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
           className={styles.button + " text-blue-400"}
           onClick={() => {
-            // addLayer(layers, updateLayers);
             openModal();
           }}
         />
         <IoIosRemoveCircleOutline
           className={styles.button + " text-blue-400"}
-          onClick={() => removeLayer(layers, updateLayers)}
+          onClick={() => {
+            removeLayer(layers, updateLayers);
+            setDenseLayer(findDenseLayer());
+          }}
         />
         {layers.length} Hidden
         {layers.length > 1 ? " Layers" : " Layer"}

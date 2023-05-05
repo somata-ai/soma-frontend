@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-const Modal = ({ isOpen, onClose, addLayer }) => {
+const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
   const [chooseLayer, setChooseLayer] = useState(true);
   const [isConv2d, setIsConv2d] = useState(false);
   const [isMaxPool, setIsMaxPool] = useState(false);
   const [isAvgPool, setIsAvgPool] = useState(false);
   const [title, setTitle] = useState("Choose Layer");
+
+  const [kernelSize, setKerenlSize] = useState(3);
+  const [numOfKernels, setNumOfKernels] = useState(1);
+  const [padding, setPadding] = useState(0);
+  const [stride, setStride] = useState(1);
 
   const closeModal = () => {
     setChooseLayer(true);
@@ -50,6 +55,7 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                   <button
                     onClick={() => {
                       addLayer();
+                      setDenseLayer(true);
                       closeModal();
                     }}
                     className="w-5/6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-8"
@@ -57,6 +63,7 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     Dense Layer
                   </button>
                   <button
+                    disabled={denseLayer}
                     onClick={() => {
                       setIsConv2d(true);
                       setIsMaxPool(false);
@@ -69,6 +76,7 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     Convolutional Layer
                   </button>
                   <button
+                    disabled={denseLayer}
                     onClick={() => {
                       setIsConv2d(false);
                       setIsMaxPool(true);
@@ -81,6 +89,7 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     Max Pool Layer
                   </button>
                   <button
+                    disabled={denseLayer}
                     onClick={() => {
                       setIsConv2d(false);
                       setIsMaxPool(false);
@@ -100,8 +109,8 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={kernelSize}
+                      onChange={(e) => setKerenlSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -111,8 +120,8 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={numOfKernels}
+                      onChange={(e) => setNumOfKernels(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -120,8 +129,8 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={stride}
+                      onChange={(e) => setStride(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -129,13 +138,21 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={padding}
+                      onChange={(e) => setPadding(e.target.value)}
                     />
                   </div>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    // onClick={toggleModal}
+                    onClick={() => {
+                      addLayer("conv2d", {
+                        kernel_size: kernelSize,
+                        num_of_kernels: numOfKernels,
+                        padding: padding,
+                        stride: stride,
+                      });
+                      closeModal();
+                    }}
                   >
                     Save
                   </button>
@@ -147,8 +164,8 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={kernelSize}
+                      onChange={(e) => setKerenlSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -156,13 +173,19 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={stride}
+                      onChange={(e) => setStride(e.target.value)}
                     />
                   </div>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    // onClick={toggleModal}
+                    onClick={() => {
+                      addLayer("maxPool2d", {
+                        kernel_size: kernelSize,
+                        stride: stride,
+                      });
+                      closeModal();
+                    }}
                   >
                     Save
                   </button>
@@ -174,8 +197,8 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={kernelSize}
+                      onChange={(e) => setKerenlSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -183,13 +206,19 @@ const Modal = ({ isOpen, onClose, addLayer }) => {
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
                       type="text"
-                      // value={firstName}
-                      // onChange={handleFirstNameChange}
+                      value={stride}
+                      onChange={(e) => setStride(e.target.value)}
                     />
                   </div>
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    // onClick={toggleModal}
+                    onClick={() => {
+                      addLayer("maxPool2d", {
+                        kernel_size: kernelSize,
+                        stride: stride,
+                      });
+                      closeModal();
+                    }}
                   >
                     Save
                   </button>

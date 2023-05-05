@@ -6,14 +6,7 @@ import { useState } from "react";
 import { redirect } from "react-router-dom";
 
 const Network = (props) => {
-  const [layers, setLayers] = useState([
-    {
-      neurons: 1,
-      type: layerTypes.linear,
-      id: uuid(),
-      number: 1,
-    },
-  ]);
+  const [layers, setLayers] = useState([]);
 
   return (
     <div
@@ -24,6 +17,21 @@ const Network = (props) => {
     >
       <HyperparametersView layers={layers} />
       <ArchitectureView layers={layers} updateLayers={setLayers} />
+
+      {/* <svg width="200" height="200" viewBox="-20 -20 40 40">
+        <line x1="5" y1="15" x2="15" y2="5" stroke="red" strokeLinecap="round" />
+        <line x1="-15" y1="-5" x2="-5" y2="-15" stroke="red" strokeLinecap="round" />
+        <line x1="5" y1="-5" x2="15" y2="-15" stroke="red" strokeLinecap="round"/>
+        <line x1="-15" y1="15" x2="5" y2="15" stroke="red" strokeLinecap="round"/>
+        <line x1="-15" y1="-5" x2="5" y2="-5" stroke="red" strokeLinecap="round"/>
+        <line x1="-5" y1="-15" x2="15" y2="-15" stroke="red" strokeLinecap="round"/>
+
+        <line x1="-5" y1="5" x2="15" y2="5" class="back"stroke="red" strokeLinecap="round"/>
+
+        <line x1="-15" y1="15" x2="-15" y2="-5" stroke="red" strokeLinecap="round"/>
+        <line x1="5" y1="15" x2="5" y2="-5" stroke="red" strokeLinecap="round"/>
+        <line x1="15" y1="5" x2="15" y2="-15" stroke="red" strokeLinecap="round"/>
+      </svg> */}
     </div>
   );
 };
