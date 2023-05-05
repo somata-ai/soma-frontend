@@ -1,40 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import {
   IoIosAddCircleOutline,
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
-import React from "react";
-import { layerTypes } from "../utils";
+import {
+  layerTypes,
+  renderDenseLayer,
+  renderConv2dLayer,
+  renderPoolLayer,
+} from "../utils";
 import { v4 as uuid } from "uuid";
 import styles from "../styles/architectureView.module.css";
-
-const addNeuron = (index, layers, updateLayers) => {
-  const updatedLayers = [...layers];
-  updatedLayers[index].neurons++;
-  updateLayers(updatedLayers);
-};
-
-const removeNeuron = (index, layers, updateLayers) => {
-  if (layers[index].neurons > 1) {
-    const updatedLayers = [...layers];
-    updatedLayers[index].neurons--;
-    updateLayers(updatedLayers);
-  } else if (layers[index].neurons === 1) {
-    const updatedLayers = [...layers];
-    updatedLayers.splice(index, 1);
-    updateLayers(updatedLayers);
-  }
-};
-
-const addLayer = (layers, updateLayers) => {
-  const newLayer = {
-    neurons: 1,
-    type: layerTypes.linear,
-    id: uuid(),
-    number: layers.length + 1,
-  };
-  updateLayers([...layers, newLayer]);
-};
+import Modal from "./Modal";
 
 const removeLayer = (layers, updateLayers) => {
   layers.pop();
@@ -42,6 +19,56 @@ const removeLayer = (layers, updateLayers) => {
 };
 
 const ArchitectureView = ({ layers, updateLayers }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => setIsOpen(false);
+  const openModal = () => setIsOpen(true);
+
+  const addLayer = (type = "dense", params = null) => {
+    let newLayer;
+
+    switch (type) {
+      case "conv2d":
+        newLayer = {
+          kernel_size: params.kernel_size,
+          num_of_kernels: params.num_of_kernels,
+          padding: params.padding,
+          stride: params.stride,
+          type: layerTypes.conv2d,
+          id: uuid(),
+          number: layers.length + 1,
+        };
+        break;
+      case "maxPool2d":
+        newLayer = {
+          kernel_size: params.kernel_size,
+          stride: params.stride,
+          type: layerTypes.maxPool2d,
+          id: uuid(),
+          number: layers.length + 1,
+        };
+        break;
+      case "avgPool2d":
+        newLayer = {
+          kernel_size: params.kernel_size,
+          stride: params.stride,
+          type: layerTypes.avgPool2d,
+          id: uuid(),
+          number: layers.length + 1,
+        };
+        break;
+      default:
+        newLayer = {
+          neurons: 1,
+          type: layerTypes.linear,
+          id: uuid(),
+          number: layers.length + 1,
+        };
+        break;
+    }
+    updateLayers([...layers, newLayer]);
+  };
+
   useEffect(() => {
     const renderLayers = () => {
       const network = document.getElementById("network");
@@ -50,121 +77,49 @@ const ArchitectureView = ({ layers, updateLayers }) => {
         network.removeChild(element);
       });
 
-      const distanceY = 50;
-      const distanceX = 150;
-      const neuronDim = 20;
       const canvasWidth = 1000 * Math.ceil(layers.length / 6);
       const canvasHeight = 500;
-      const offset = 100;
-      const offsetx = 100;
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("id", "svg");
       svg.setAttribute("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
       svg.setAttribute("width", `${canvasWidth}`);
       svg.setAttribute("height", `${canvasHeight}`);
       svg.style.display = "block";
-      // svg.style.border = "1px solid red";
+      svg.style.border = "1px solid red";
 
       // Looping through the layers.
       for (let i = 0; i < layers.length; i++) {
-        // Looping through neurons for each layer.
-
-        if (layers[i].neurons > 8) {
-          //increase the svg viewbox height.
-          const newHeight = Math.ceil(layers[i].neurons / 8) * canvasHeight;
-          svg.setAttribute("viewBox", `0 0 ${canvasWidth} ${newHeight}`);
-          svg.setAttribute("height", `${newHeight}`);
+        switch (layers[i].type) {
+          case "conv2d":
+            renderConv2dLayer();
+            break;
+          case "maxPool2d":
+            renderPoolLayer();
+            break;
+          case "avgPool2d":
+            renderPoolLayer();
+            break;
+          default:
+            renderDenseLayer(svg, layers, updateLayers, i);
+            break;
         }
-
-        let n;
-        for (n = 0; n < layers[i].neurons; n++) {
-          const neuron = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "circle"
-          );
-
-          neuron.setAttribute("cx", `${offsetx + i * distanceX}`);
-          neuron.setAttribute("cy", `${offset + n * distanceY}`);
-          neuron.setAttribute("r", neuronDim);
-          // neuron.setAttribute("fill", "#6a229b");
-          neuron.setAttribute("fill", "white");
-          neuron.setAttribute("stroke", "#6a229b");
-          neuron.setAttribute("stroke-width", "2");
-
-          svg.appendChild(neuron);
-
-          // For each neuron in second layer and beyound.
-          if (i > 0) {
-            // For each neuron of previous layer.
-            for (let n = 0; n < layers[i - 1].neurons; n++) {
-              const line = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "line"
-              );
-              line.setAttribute("x1", neuron.getAttribute("cx") - neuronDim);
-              line.setAttribute("y1", neuron.getAttribute("cy"));
-              line.setAttribute(
-                "x2",
-                `${offsetx + (i - 1) * distanceX + neuronDim}`
-              );
-              line.setAttribute("y2", `${offset + n * distanceY}`);
-              line.setAttribute("stroke", "#6a229b");
-              line.style.display = "block";
-
-              svg.appendChild(line);
-            }
-          }
-        }
-        const foreignObject = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "foreignObject"
-        );
-        foreignObject.setAttribute(
-          "x",
-          `${offsetx + i * distanceX - 1.5 * neuronDim}`
-        );
-        foreignObject.setAttribute("y", `${40}`);
-        foreignObject.setAttribute("width", "70");
-        foreignObject.setAttribute("height", "30");
-
-        const buttonsContainer = document.createElement("div");
-
-        const add = document.createElement("button");
-        const remove = document.createElement("button");
-
-        add.textContent = "+";
-        add.style =
-          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color: rgb(96 165 250); margin-right: 2px";
-        add.addEventListener(
-          "click",
-          addNeuron.bind(this, i, layers, updateLayers)
-        );
-
-        remove.textContent = "-";
-        remove.style =
-          "width: 30px; border-radius: 25%; font-size: large; font-weight: 600; color: white; background-color:  rgb(96 165 250)";
-        remove.addEventListener(
-          "click",
-          removeNeuron.bind(this, i, layers, updateLayers)
-        );
-
-        buttonsContainer.append(add, remove);
-        foreignObject.appendChild(buttonsContainer);
-        svg.appendChild(foreignObject);
       }
-
       network.appendChild(svg);
     };
-
     renderLayers();
   }, [layers]);
 
   return (
     <div>
+      <Modal isOpen={isOpen} addLayer={addLayer} onClose={closeModal} />
+
       <div className={styles.buttonsContainer}>
         <IoIosAddCircleOutline
           className={styles.button + " text-blue-400"}
-          onClick={() => addLayer(layers, updateLayers)}
+          onClick={() => {
+            // addLayer(layers, updateLayers);
+            openModal();
+          }}
         />
         <IoIosRemoveCircleOutline
           className={styles.button + " text-blue-400"}
