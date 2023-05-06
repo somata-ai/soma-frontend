@@ -4,11 +4,9 @@ import Header from "../components/Header";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 
-
 const SignUpPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -31,12 +29,12 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     if (name === "" && password === "" && confirmPassword === "") {
       showError();
     } else if (password !== confirmPassword) {
       showError();
-    } else if (name === ""){
+    } else if (name === "") {
       showErrorName();
     } else {
       auth.login(name);

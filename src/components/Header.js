@@ -9,14 +9,24 @@ const Header = (props) => {
     <div className="bg-purple-900 h-12 flex flex-row items-center">
       <h1 className="text-white text-2xl ml-2">Soma</h1>
       {auth.user ? (
-        <div className="flex justify-evenly w-1/6 ml-auto mr-5">
+        <div className="flex justify-evenly w-fit ml-auto mr-5">
+          <NavLink to={"/profile"}>
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
+              Learn
+            </div>
+          </NavLink>
+          <NavLink to={"/profile"}>
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
+              Dashboard
+            </div>
+          </NavLink>
           <NavLink to={"/model"}>
-            <div className="text-white transition ease-in hover:scale-110 duration-200">
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
               Create
             </div>
           </NavLink>
           <div
-            className="text-white transition ease-in hover:cursor-pointer hover:scale-110 duration-200"
+            className="ml-2 mr-2 text-white transition ease-in hover:cursor-pointer hover:scale-110 duration-200"
             onClick={(e) => {
               auth.logout();
               navigate("/login", { replace: true });
@@ -26,19 +36,19 @@ const Header = (props) => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-evenly w-1/6 ml-auto mr-5">
+        <div className="flex justify-evenly w-fit ml-auto mr-5">
           <NavLink to={"/model"}>
-            <div className="text-white transition ease-in hover:scale-110 duration-200">
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
               Create
             </div>
           </NavLink>
           <NavLink to={"/login"}>
-            <div className="text-white transition ease-in hover:scale-110 duration-200">
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
               Login
             </div>
           </NavLink>
           <NavLink to={"/signUp"}>
-            <div className="text-white transition ease-in hover:scale-110 duration-200">
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
               SignUp
             </div>
           </NavLink>
