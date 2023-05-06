@@ -8,7 +8,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
   const [isAvgPool, setIsAvgPool] = useState(false);
   const [title, setTitle] = useState("Choose Layer");
 
-  const [kernelSize, setKerenlSize] = useState(3);
+  const [kernelSize, setKernelSize] = useState(3);
   const [numOfKernels, setNumOfKernels] = useState(1);
   const [padding, setPadding] = useState(0);
   const [stride, setStride] = useState(1);
@@ -19,6 +19,10 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
     setIsMaxPool(false);
     setIsAvgPool(false);
     setTitle("Choose Layer");
+    setKernelSize(3);
+    setNumOfKernels(1);
+    setPadding(0);
+    setStride(1);
     onClose();
   };
 
@@ -108,9 +112,9 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={kernelSize}
-                      onChange={(e) => setKerenlSize(e.target.value)}
+                      onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
@@ -119,7 +123,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     </label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={numOfKernels}
                       onChange={(e) => setNumOfKernels(e.target.value)}
                     />
@@ -128,7 +132,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={stride}
                       onChange={(e) => setStride(e.target.value)}
                     />
@@ -137,7 +141,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     <label className="block font-bold mr-2">Padding:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={padding}
                       onChange={(e) => setPadding(e.target.value)}
                     />
@@ -163,16 +167,16 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={kernelSize}
-                      onChange={(e) => setKerenlSize(e.target.value)}
+                      onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={stride}
                       onChange={(e) => setStride(e.target.value)}
                     />
@@ -196,16 +200,16 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={kernelSize}
-                      onChange={(e) => setKerenlSize(e.target.value)}
+                      onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
-                      type="text"
+                      type="number"
                       value={stride}
                       onChange={(e) => setStride(e.target.value)}
                     />

@@ -24,30 +24,22 @@ const HyperparametersView = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.buttons_container}>
-        <BsArrowCounterclockwise className={styles.reset_button} />
+      <div className="hover:cursor-pointer font-medium">
         <div
           className={styles.start_button}
           onClick={() => {
-            myModel(props.layers, {
-              learningRate: learningRate.current,
-              activation: activation.current,
-              optimizer: optimizer.current,
-            });
-            run();
+            /**
+             * Send post req to flask api with
+             * layers object
+             * hyperparameters object
+             * all stringified into json.
+             */
           }}
         >
-          <HiPlay />
+          <span>START</span>
         </div>
-        {/* <div>ne</div> */}
       </div>
 
-      <div className={styles.epoch}>
-        <h4>Epoch</h4>
-        <p id="epoch" className="text-lg">
-          000000
-        </p>
-      </div>
       <div>
         <button
           id="show-graphs"
@@ -61,9 +53,15 @@ const HyperparametersView = (props) => {
             // const drawArea = surface.drawArea;
           }}
         >
-          {" "}
           Show graphs
         </button>
+      </div>
+      <div className="flex flex-col border">
+        <h4>Epochs</h4>
+        <input
+          className="bg-transparent border border-gray-400 pl-2 pr-2 w-20 mt-3 rounded"
+          type="number"
+        />
       </div>
       <div className={styles.card_container}>
         <Card
