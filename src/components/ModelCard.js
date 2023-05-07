@@ -1,9 +1,62 @@
+import { useState } from "react";
 import { IoHeartSharp } from "react-icons/io5";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { NODE_API_URL } from "../utils";
 
 const ModalCard = ({ model }) => {
   const navigate = useNavigate();
+  const [update, setUpdate] = useState(false);
+
+  const toggleUpdate = () => (update ? setUpdate(false) : setUpdate(true));
+
+  const toggleLike = () => {
+    fetch(NODE_API_URL + `/models/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + localStorage.soma_token,
+      },
+      body: JSON.stringify({
+        model_id: model.model_id,
+        likes: model.likes + 1,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.model_id) {
+          console.log("Model updated");
+          model.likes = model.likes + 1;
+          toggleUpdate();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const togglePublic = () => {
+    fetch(NODE_API_URL + `/models/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + localStorage.soma_token,
+      },
+      body: JSON.stringify({
+        model_id: model.model_id,
+        public: model.public !== 0 ? 0 : 1,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.model_id) {
+          console.log("Model updated");
+          model.public = model.public !== 0 ? 0 : 1;
+          toggleUpdate();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const openCommentModal = () => {};
 
   return (
     <div className="flex flex-col p-5 pb-3 border border-solid border-purple-300 w-96 h-36 rounded-lg">
@@ -23,15 +76,20 @@ const ModalCard = ({ model }) => {
         id="likes and comments and visibility"
         className="flex items-center flex-row w-auto mt-auto ml-auto hover:cursor-pointer"
       >
-        <div className="flex flex-row items-center w-auto">
+        <div onClick={toggleLike} className="flex flex-row items-center w-auto">
           <IoHeartSharp className="text-red-400 text-lg" />
           <div className="text-xs text-gray-400 mr-1">{model.likes}</div>
         </div>
-        <FaRegComment className="text-gray-400 mr-1" />
-        <div className="text-xs text-gray-400 mr-1">
+
+        <div onClick={openCommentModal} className="text-xs text-gray-400 mr-1">
+          <FaRegComment className="text-gray-400 mr-1" />
           {model.comments[0] !== null ? model.comments.length : 0}
         </div>
-        <div className="text-purple-400 text-sm border border-solid rounded-lg px-1">
+
+        <div
+          onClick={togglePublic}
+          className="text-purple-400 text-sm border border-solid rounded-lg px-1"
+        >
           {model.public !== 0 ? "public" : "private"}
         </div>
       </div>
