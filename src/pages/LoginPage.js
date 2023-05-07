@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/auth";
+import { NODE_API_URL } from "../utils";
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -21,16 +22,28 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (name !== "test" || password !== "abc") {
-      showError();
-      return;
-    } else {
-      auth.login("test");
-      localStorage.setItem("user", "test");
-      setErr(false);
-      navigate("/profile", { replace: true });
-    }
+
+    fetch(NODE_API_URL + "/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: name, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user) {
+          localStorage.setItem("soma_token", data.user);
+          localStorage.setItem("user", data.id);
+          auth.login(true);
+          navigate("/profile", { replace: true });
+          setErr(false);
+          return;
+        } else {
+          showError();
+          auth.logout();
+          return;
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

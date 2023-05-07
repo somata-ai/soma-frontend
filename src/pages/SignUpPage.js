@@ -3,6 +3,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
+import { NODE_API_URL } from "../utils";
 
 const SignUpPage = () => {
   const auth = useAuth();
@@ -29,7 +30,7 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (name === "" && password === "" && confirmPassword === "") {
       showError();
     } else if (password !== confirmPassword) {
@@ -37,10 +38,27 @@ const SignUpPage = () => {
     } else if (name === "") {
       showErrorName();
     } else {
-      auth.login(name);
-      localStorage.setItem("user", name);
-      setErr(false);
-      navigate("/settings", { replace: true });
+      fetch(NODE_API_URL + "/users/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: name, password }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) {
+            localStorage.setItem("soma_token", data.user);
+            localStorage.setItem("user", data.id);
+            auth.login(true);
+            navigate("/profile", { replace: true });
+            setErr(false);
+            return;
+          } else {
+            showError();
+            auth.logout();
+            return;
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
 

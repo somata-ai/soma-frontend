@@ -108,7 +108,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                 </div>
               ) : isConv2d ? (
                 <div className="mt-10 flex flex-col items-center justify-center">
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -117,7 +117,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                       onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">
                       Num of Kernels:
                     </label>
@@ -128,7 +128,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                       onChange={(e) => setNumOfKernels(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -137,7 +137,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                       onChange={(e) => setStride(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Padding:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -163,7 +163,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                 </div>
               ) : isMaxPool ? (
                 <div className="mt-10 flex flex-col items-center justify-center">
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -172,7 +172,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                       onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -196,7 +196,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                 </div>
               ) : isAvgPool ? (
                 <div className="mt-10 flex flex-col items-center justify-center">
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Kernel Size:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"
@@ -205,7 +205,7 @@ const Modal = ({ isOpen, onClose, addLayer, denseLayer, setDenseLayer }) => {
                       onChange={(e) => setKernelSize(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 bt-2">
+                  <div className="flex flex-row w-11/12 items-center justify-between mb-2 mt-2">
                     <label className="block font-bold mr-2">Stride:</label>
                     <input
                       className="border border-gray-400 p-2 w-6/12 rounded"

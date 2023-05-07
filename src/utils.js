@@ -5,6 +5,9 @@ export const layerTypes = {
   avgPool2d: "avgPool2d",
 };
 
+export const NODE_API_URL = "http://localhost:5050";
+export const FLASK_API_URL = "";
+
 const addNeuron = (index, layers, updateLayers) => {
   const updatedLayers = [...layers];
   updatedLayers[index].neurons++;

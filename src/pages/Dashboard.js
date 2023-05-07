@@ -1,9 +1,32 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalCard from "../components/ModelCard";
 import ProfilePicture from "../components/ProfilePicture";
+import { NODE_API_URL } from "../utils";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [models, setModels] = useState([]);
+
+  useEffect(() => {
+    const getModels = () => {
+      fetch(NODE_API_URL + `/models/${localStorage.user}/getUserModels`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "bearer " + localStorage.soma_token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setModels(data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    getModels();
+  }, []);
 
   return (
     <div className="bg-white flex min-h-screen">
@@ -19,21 +42,20 @@ const Dashboard = () => {
         </p>
         <button
           className="w-64 h-8 mt-6 bg-purple-900 text-white text-md hover:bg-purple-800 rounded"
-          onClick={() => navigate("/settings", { replace: true })}
+          onClick={() => navigate("/settings", { replace: false })}
         >
           Edit Profile
         </button>
         <hr className="mt-5 bg-gray-400 h-0.5" style={{ width: "80%" }}></hr>
       </div>
       <div id="projects" className="p-20 grid grid-cols-2 auto-rows-min gap-6">
-        <ModalCard title="Hello World" visibility="public" />
-        <ModalCard title="Perceptron" visibility="private" />
-        <ModalCard title="Lth Layer Model" visibility="private" />
-        <ModalCard
-          title="Hello World Again Hello World Again Hello World Again"
-          visibility="private"
-        />
-        <ModalCard title="Hello World" visibility="public" />
+        {models.length === 0 ? (
+          <div>No projects yet.</div>
+        ) : (
+          models.map((model) => {
+            return <ModalCard model={model} />;
+          })
+        )}
       </div>
     </div>
   );

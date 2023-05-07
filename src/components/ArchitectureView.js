@@ -36,7 +36,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           padding: params.padding,
           stride: params.stride,
           type: layerTypes.conv2d,
-          id: uuid(),
+          // id: uuid(),
           number: layers.length + 1,
         };
         break;
@@ -45,7 +45,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           kernel_size: params.kernel_size,
           stride: params.stride,
           type: layerTypes.maxPool2d,
-          id: uuid(),
+          // id: uuid(),
           number: layers.length + 1,
         };
         break;
@@ -54,7 +54,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
           kernel_size: params.kernel_size,
           stride: params.stride,
           type: layerTypes.avgPool2d,
-          id: uuid(),
+          // id: uuid(),
           number: layers.length + 1,
         };
         break;
@@ -62,7 +62,7 @@ const ArchitectureView = ({ layers, updateLayers }) => {
         newLayer = {
           neurons: 1,
           type: layerTypes.dense,
-          id: uuid(),
+          // id: uuid(),
           number: layers.length + 1,
         };
         break;

@@ -10,6 +10,7 @@ export const AuthProvider = (props) => {
   };
 
   const logout = () => {
+    localStorage.removeItem("soma_token");
     localStorage.removeItem("user");
     setUser(null);
   };

@@ -2,11 +2,20 @@ import HyperparametersView from "../components/HyperparametersView";
 import ArchitectureView from "../components/ArchitectureView";
 import { layerTypes } from "../utils";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Network = (props) => {
-  const [layers, setLayers] = useState([]);
+  const { state } = useLocation();
+
+  const [layers, setLayers] = useState(state !== null ? state.layers : []);
+
+  useEffect(() => {
+    state !== null ? console.log(state) : console.log("no");
+    // if (state) {
+    //   console.log(state.layers);
+    // }
+  }, []);
 
   return (
     <div
@@ -15,7 +24,10 @@ const Network = (props) => {
         backgroundColor: "rgba(255, 255, 255, 0.75)",
       }}
     >
-      <HyperparametersView layers={layers} />
+      <HyperparametersView
+        layers={layers}
+        model={state !== null ? state : null}
+      />
       <ArchitectureView layers={layers} updateLayers={setLayers} />
 
       {/* <svg width="200" height="200" viewBox="-20 -20 40 40">
