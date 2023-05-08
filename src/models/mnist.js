@@ -32,14 +32,14 @@ async function showExamples(data) {
   }
 }
 
-export async function runMnist() {
+export async function runMnist(layers, hyperparameters) {
   console.log("Loading data....");
   const data = new MnistData();
   await data.load();
   console.log("Loaded....");
   await showExamples(data);
 
-  const model = getModel();
+  const model = getModel(layers, hyperparameters);
   tfvis.show.modelSummary({ name: "Model Architecture", tab: "Model" }, model);
 
   await train(model, data);
@@ -47,7 +47,7 @@ export async function runMnist() {
 
 // document.addEventListener("DOMContentLoaded", runMn);
 
-function getModel() {
+function getModel(layers, hyperparameters) {
   const model = tf.sequential();
 
   const IMAGE_WIDTH = 28;
@@ -68,27 +68,67 @@ function getModel() {
     })
   );
 
+  let isFlattened = false;
+
+  layers.forEach((layer) => {
+    switch (layer.type) {
+      case "conv2d":
+        model.add(
+          tf.layers.conv2d({
+            kernelSize: Number(layer.kernel_size),
+            filters: Number(layer.num_of_kernels),
+            strides: Number(layer.stride),
+            activation: "relu",
+            kernelInitializer: "varianceScaling",
+          })
+        );
+        break;
+      case "maxPool2d":
+        model.add(
+          tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] })
+        );
+        break;
+      case "avgPool2d":
+        break;
+      default:
+        if (!isFlattened) {
+          model.add(tf.layers.flatten());
+          isFlattened = true;
+        }
+        model.add(
+          tf.layers.dense({
+            units: Number(layer.neurons),
+            kernelInitializer: "varianceScaling",
+            activation: "relu",
+          })
+        );
+        break;
+    }
+  });
+
   // The MaxPooling layer acts as a sort of downsampling using max values
   // in a region instead of averaging.
-  model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
+  // model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
 
   // Repeat another conv2d + maxPooling stack.
   // Note that we have more filters in the convolution.
-  model.add(
-    tf.layers.conv2d({
-      kernelSize: 5,
-      filters: 16,
-      strides: 1,
-      activation: "relu",
-      kernelInitializer: "varianceScaling",
-    })
-  );
-  model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
+  // model.add(
+  //   tf.layers.conv2d({
+  //     kernelSize: 5,
+  //     filters: 16,
+  //     strides: 1,
+  //     activation: "relu",
+  //     kernelInitializer: "varianceScaling",
+  //   })
+  // );
+  // model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
 
   // Now we flatten the output from the 2D filters into a 1D vector to prepare
   // it for input into our last layer. This is common practice when feeding
   // higher dimensional data to a final classification output layer.
-  model.add(tf.layers.flatten());
+  if (!isFlattened) {
+    model.add(tf.layers.flatten());
+  }
 
   // Our last layer is a dense layer which has 10 output units, one for each
   // output class (i.e. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9).

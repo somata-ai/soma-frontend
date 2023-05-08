@@ -55,9 +55,8 @@ const HyperparametersView = (props) => {
               //   optimizer: optimizer.current,
               // });
               // run();
-              
-              runMnist();
 
+              runMnist(props.layers, {});
             }}
           >
             <HiPlay />
