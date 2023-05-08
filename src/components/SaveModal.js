@@ -25,6 +25,10 @@ const SaveModal = ({ isOpen, onClose, params, model }) => {
   };
 
   const saveModel = () => {
+    if (model && model.user_id !== Number(localStorage.user)) {
+      return;
+    }
+
     if (name === "") {
       showError();
     } else {

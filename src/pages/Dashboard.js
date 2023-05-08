@@ -53,7 +53,14 @@ const Dashboard = () => {
           <div>No projects yet.</div>
         ) : (
           models.map((model) => {
-            return <ModalCard model={model} />;
+            return (
+              <ModalCard
+                key={model.model_id}
+                models={models}
+                setModels={setModels}
+                model={model}
+              />
+            );
           })
         )}
       </div>

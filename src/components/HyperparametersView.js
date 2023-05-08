@@ -23,7 +23,6 @@ const HyperparametersView = (props) => {
   const activation = useRef("relu");
   const optimizer = useRef("adam");
 
-  const [epochs, setEpochs] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -95,7 +94,15 @@ const HyperparametersView = (props) => {
         <div>
           {auth.user ? (
             <button
-              onClick={openModal}
+              onClick={() => {
+                if (
+                  props.model &&
+                  props.model.user_id !== Number(localStorage.user)
+                ) {
+                  return;
+                }
+                openModal();
+              }}
               className="text-sm rounded-lg border border-black p-2 hover:bg-purple-200"
             >
               Save Model
