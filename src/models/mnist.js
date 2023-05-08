@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
-import { MnistData } from "./data.js";
+import { MnistData } from "./mnistdata.js";
 
 async function showExamples(data) {
   // Create a container in the visor

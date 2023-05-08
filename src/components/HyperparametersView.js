@@ -8,12 +8,13 @@ import * as tfvis from "@tensorflow/tfjs-vis";
 import SaveModal from "./SaveModal";
 import { useAuth } from "../context/auth";
 import { runMnist } from "../models/mnist";
+import { runIris } from "../models/iris";
 
 const options = {
   rateOptions: [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10],
   activation: ["relu", "sigmoid", "tanh", "linear"],
   optimizer: ["adam", "sgd", "rmsprop", "adadelta", "adagrad"],
-  dataset: ["boston housing", "mnist", "cifar", "eurosat"],
+  dataset: ["boston-housing", "mnist", "iris"],
 };
 
 const HyperparametersView = (props) => {
@@ -56,7 +57,12 @@ const HyperparametersView = (props) => {
               // });
               // run();
 
-              runMnist(props.layers, {});
+              // runMnist(props.layers, {});
+              runIris(props.layers, {
+                learningRate: learningRate.current,
+                activation: activation.current,
+                optimizer: optimizer.current,
+              });
             }}
           >
             <HiPlay />
