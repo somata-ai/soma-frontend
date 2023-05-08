@@ -10,12 +10,12 @@ const Network = (props) => {
 
   const [layers, setLayers] = useState(state !== null ? state.layers : []);
 
-  useEffect(() => {
-    state !== null ? console.log(state) : console.log("no");
-    // if (state) {
-    //   console.log(state.layers);
-    // }
-  }, []);
+  // useEffect(() => {
+  //   // state !== null ? console.log(state) : console.log("no");
+  //   // if (state) {
+  //   //   console.log(state.layers);
+  //   // }
+  // }, []);
 
   return (
     <div

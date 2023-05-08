@@ -7,8 +7,27 @@ import { layerTypes } from "../utils";
  * These parameters will be passed later on as arguments.
  */
 
-const csvUrl =
-  "https://storage.googleapis.com/tfjs-examples/multivariate-linear-regression/data/boston-housing-train.csv";
+// const csvUrl =
+//   "https://storage.googleapis.com/tfjs-examples/multivariate-linear-regression/data/boston-housing-train.csv";
+
+const irisJson =
+  "https://storage.googleapis.com/kagglesdsdata/datasets/20079/26025/iris.json?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20230508%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20230508T054754Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=33e4ed8d9f7c3a1725da6e0459737df8d7c765541945895f617ed84e543a755578eb36cfa230c5e6fb6a0addc28009cca7c7a76b121829331608cd6315f9d52c0c7ff8fa5e3ae23d32f844076da5a30a44bb96b793eaefb39053cb43cf58916b53c5785f7549c0419f565c046ac85cdf6565443c6ff4304a0a991745b70a5e9ad87ffe57a30439c841e3dc0d1fee47744daba94b58759b1b6d9788874372fce15f643b04bca634fe8615f217d4be3420179f86175381e61e85269e011c4982f95c80ba7b8deebd4784764bac3380e4eb1b5ea2c11f6b5be1981bc436db9fd970dcfe9df2588ffdc0a901863ac9cda7144c7ef2cac06c7c6a7b75e1ccd11a6b2f";
+
+async function getIrisData() {
+  const irisDataReq = await fetch(irisJson);
+  const irisData = await irisDataReq.json();
+  const cleaned = irisData
+    .map((iris) => ({
+      sepalLength: iris.sepalLength,
+      sepalWidth: iris.sepalWidth,
+      petalLength: iris.petalLength,
+      petalWidth: iris.petalWidth,
+      species: iris.species,
+    }))
+    .filter((iris) => iris.price != null && iris.rooms != null);
+
+  return cleaned;
+}
 
 async function getData() {
   const houseDataReq = await fetch(
@@ -75,42 +94,6 @@ export const run = async () => {
   );
 };
 
-// export const watchTraining = async (layers, hyperparameters) => {
-//   const metrics = ["loss"];
-//   const container = {
-//     name: "show.fitCallbacks",
-//     tab: "Training",
-//     styles: {
-//       height: "1000px",
-//     },
-//   };
-//   const callbacks = tfvis.show.fitCallbacks(container, metrics);
-//   return myModel(layers, hyperparameters, callbacks);
-// };
-
-// const loadData = async () => {
-//   const csvDataset = tf.data.csv(csvUrl, {
-//     columnConfigs: {
-//       medv: {
-//         isLabel: true,
-//       },
-//     },
-//   });
-//   // Number of features is the number of column names minus one for the label
-//   const numOfFeatures = (await csvDataset.columnNames()).length - 1;
-
-//   // Prepare the Dataset for training.
-//   const flattenedDataset = csvDataset
-//     .map(({ xs, ys }) => {
-//       // Convert xs(features) and ys(labels) from object form (keyed by column name) to array form.
-//       return { xs: Object.values(xs), ys: Object.values(ys) };
-//     })
-//     .batch(10);
-//   console.log(flattenedDataset);
-
-//   return { flattenedDataset, numOfFeatures };
-// };
-
 const setupModel = (layers, hyperparameters) => {
   // Define the model.
   const model = tf.sequential();
@@ -139,40 +122,35 @@ export const myModel = async (layers, hyperparameters, fitCallbacks) => {
   const { inputs, labels } = convertToTensor(await getData());
   const model = setupModel(layers, hyperparameters);
 
+  const d = await getIrisData();
+  console.log(inputs);
   console.log(hyperparameters);
   console.log(model.summary());
   tfvis.show.modelSummary({ name: "Model Summary" }, model);
-  // const surface = { name: "show.history", tab: "Training" };
-  // document
-  //   .querySelector("#show-graphs")
-  //   .addEventListener("click", () => watchTraining(model, flattenedDataset));
 
   // Fit the model using the prepared Dataset
   return model.fit(inputs, labels, {
     batchSize: 8,
     epochs: 10,
-    callbacks:[
-      {onEpochEnd: async (epoch, logs) => {
-        console.log(epoch, logs.loss);
-        document.getElementById("epoch").textContent = zeroPadNumber(epoch, 6);
-      }},
+    callbacks: [
+      {
+        onEpochEnd: async (epoch, logs) => {
+          console.log(epoch, logs.loss);
+          document.getElementById("epoch").textContent = zeroPadNumber(
+            epoch,
+            6
+          );
+        },
+      },
       tfvis.show.fitCallbacks(
         { name: "Training Performance" },
         ["loss", "mse"],
         {
           height: 200,
           callbacks: ["onEpochEnd"],
-        }, 
-      )
-    ]
-    // tfvis.show.fitCallbacks(
-    //   { name: "Training Performance" },
-    //   ["loss", "mse"],
-    //   {
-    //     height: 200,
-    //     callbacks: ["onEpochEnd"],
-    //   }
-    // ),
+        }
+      ),
+    ],
   });
 };
 

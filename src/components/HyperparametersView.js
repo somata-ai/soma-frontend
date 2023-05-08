@@ -7,6 +7,7 @@ import DropdownMenu from "./DropdownMenu";
 import * as tfvis from "@tensorflow/tfjs-vis";
 import SaveModal from "./SaveModal";
 import { useAuth } from "../context/auth";
+import { runMnist } from "../models/mnist";
 
 const options = {
   rateOptions: [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10],
@@ -48,16 +49,26 @@ const HyperparametersView = (props) => {
           <div
             className={styles.start_button}
             onClick={() => {
-              /**
-               * Send post req to flask api with
-               * layers object
-               * hyperparameters object
-               * all stringified into json.
-               */
+              // myModel(props.layers, {
+              //   learningRate: learningRate.current,
+              //   activation: activation.current,
+              //   optimizer: optimizer.current,
+              // });
+              // run();
+              
+              runMnist();
+
             }}
           >
-            <span>START</span>
+            <HiPlay />
+            {/* <span>START</span> */}
           </div>
+        </div>
+        <div className={styles.epoch}>
+          <h4>Epoch</h4>
+          <p id="epoch" className="text-lg">
+            000000
+          </p>
         </div>
 
         <div>
@@ -66,11 +77,11 @@ const HyperparametersView = (props) => {
             className="text-sm rounded-lg border border-black p-2 hover:bg-purple-200"
             onClick={() => {
               tfvis.visor().toggle();
-              // const surface = tfvis
-              //   .visor()
-              //   .surface({ name: "My First Surface", tab: "Input Data" });
+              const surface = tfvis
+                .visor()
+                .surface({ name: "My First Surface", tab: "Input Data" });
 
-              // const drawArea = surface.drawArea;
+              const drawArea = surface.drawArea;
             }}
           >
             Show graphs
@@ -88,7 +99,7 @@ const HyperparametersView = (props) => {
             ""
           )}
         </div>
-        <div className="flex flex-col border">
+        {/* <div className="flex flex-col border">
           <span className="text-sm">Epochs</span>
           <input
             className="bg-transparent border border-gray-400 pl-2 pr-2 w-20 mt-3 rounded-lg"
@@ -102,7 +113,7 @@ const HyperparametersView = (props) => {
               }
             }}
           />
-        </div>
+        </div> */}
         <div className="flex flex-row justify-evenly w-3/5">
           <Card
             title="Learning Rate"
