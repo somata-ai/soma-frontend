@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/soma-portal/static/css/main.43f4bf9f.css",
-    "main.js": "/soma-portal/static/js/main.2d6a0cf3.js",
+    "main.js": "/soma-portal/static/js/main.fc8ebd8b.js",
     "static/media/bg.png": "/soma-portal/static/media/bg.5e8ea6f951ce29929699.png",
     "static/media/wallpaper.jpg": "/soma-portal/static/media/wallpaper.121b74738de1a0fe4fb8.jpg",
     "index.html": "/soma-portal/index.html",
     "main.43f4bf9f.css.map": "/soma-portal/static/css/main.43f4bf9f.css.map",
-    "main.2d6a0cf3.js.map": "/soma-portal/static/js/main.2d6a0cf3.js.map"
+    "main.fc8ebd8b.js.map": "/soma-portal/static/js/main.fc8ebd8b.js.map"
   },
   "entrypoints": [
     "static/css/main.43f4bf9f.css",
-    "static/js/main.2d6a0cf3.js"
+    "static/js/main.fc8ebd8b.js"
   ]
 }
