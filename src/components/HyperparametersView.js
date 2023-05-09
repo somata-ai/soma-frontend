@@ -14,7 +14,7 @@ const options = {
   rateOptions: [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10],
   activation: ["relu", "sigmoid", "tanh", "linear"],
   optimizer: ["adam", "sgd", "rmsprop", "adadelta", "adagrad"],
-  dataset: ["boston-housing", "mnist", "iris"],
+  dataset: ["iris", "mnist", "boston-housing"],
 };
 
 const HyperparametersView = (props) => {
@@ -23,6 +23,7 @@ const HyperparametersView = (props) => {
   const activation = useRef("relu");
   const optimizer = useRef("adam");
 
+  // const [dataset, setDataset] = useState("iris");
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -49,19 +50,32 @@ const HyperparametersView = (props) => {
           <div
             className={styles.start_button}
             onClick={() => {
-              // myModel(props.layers, {
-              //   learningRate: learningRate.current,
-              //   activation: activation.current,
-              //   optimizer: optimizer.current,
-              // });
-              // run();
+              switch (props.dataset) {
+                case "mnist":
+                  runMnist(props.layers, {
+                    learningRate: learningRate.current,
+                    activation: activation.current,
+                    optimizer: optimizer.current,
+                  });
+                  break;
+                case "boston-housing":
+                  myModel(props.layers, {
+                    learningRate: learningRate.current,
+                    activation: activation.current,
+                    optimizer: optimizer.current,
+                  });
+                  run();
+                  break;
+                default:
+                  runIris(props.layers, {
+                    learningRate: learningRate.current,
+                    activation: activation.current,
+                    optimizer: optimizer.current,
+                  });
+                  break;
+              }
 
               // runMnist(props.layers, {});
-              runIris(props.layers, {
-                learningRate: learningRate.current,
-                activation: activation.current,
-                optimizer: optimizer.current,
-              });
             }}
           >
             <HiPlay />
@@ -146,7 +160,7 @@ const HyperparametersView = (props) => {
           <Card
             title="Dataset"
             options={options.dataset}
-            update={() => {}}
+            update={props.setDataset}
           ></Card>
         </div>
       </div>

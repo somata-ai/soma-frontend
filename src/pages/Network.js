@@ -9,6 +9,12 @@ const Network = (props) => {
   const { state } = useLocation();
 
   const [layers, setLayers] = useState(state !== null ? state.layers : []);
+  const [dataset, setDataset] = useState("iris");
+
+  const updateDataset = (value) => {
+    setDataset(value);
+    console.log("Dataset changed");
+  };
 
   // useEffect(() => {
   //   // state !== null ? console.log(state) : console.log("no");
@@ -27,8 +33,15 @@ const Network = (props) => {
       <HyperparametersView
         layers={layers}
         model={state !== null ? state : null}
+        dataset={dataset}
+        setDataset={updateDataset}
       />
-      <ArchitectureView layers={layers} updateLayers={setLayers} />
+      <ArchitectureView
+        layers={layers}
+        updateLayers={setLayers}
+        dataset={dataset}
+        // setDataset={updateDataset}
+      />
 
       {/* <svg width="200" height="200" viewBox="-20 -20 40 40">
         <line x1="5" y1="15" x2="15" y2="5" stroke="red" strokeLinecap="round" />

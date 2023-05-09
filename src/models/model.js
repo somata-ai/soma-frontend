@@ -108,6 +108,8 @@ const setupModel = (layers, hyperparameters) => {
     );
   });
 
+  model.add(tf.layers.dense({ activation: "relu", units: 1 }));
+
   model.compile({
     optimizer: tf.train[hyperparameters.optimizer](
       Number(hyperparameters.learningRate)

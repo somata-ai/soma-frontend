@@ -18,9 +18,17 @@ const removeLayer = (layers, updateLayers) => {
   updateLayers([...layers]);
 };
 
-const ArchitectureView = ({ layers, updateLayers }) => {
+const ArchitectureView = ({ layers, updateLayers, dataset }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [denseLayer, setDenseLayer] = useState(false);
+  const [denseLayer, setDenseLayer] = useState(
+    dataset !== "mnist" ? true : false
+  );
+
+  useEffect(() => {
+    console.log(dataset !== "mnist" ? true : false);
+    setDenseLayer(dataset !== "mnist" ? true : false);
+    // updateLayers([]);
+  }, [dataset]);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
@@ -71,6 +79,9 @@ const ArchitectureView = ({ layers, updateLayers }) => {
   };
 
   const findDenseLayer = () => {
+    if (dataset !== "mnist") {
+      return true;
+    }
     for (let i = layers.length - 1; i > -1; i--) {
       if (layers[i].type === "dense") {
         return true;

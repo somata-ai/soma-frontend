@@ -94,9 +94,9 @@ const LoginPage = () => {
             >
               Log in
             </button>
-            <button className="bg-purple-800 hover:bg-purple-900 font-sans text-xl text-white rounded-lg w-80 h-12">
+            {/* <button className="bg-purple-800 hover:bg-purple-900 font-sans text-xl text-white rounded-lg w-80 h-12">
               Continue with Google
-            </button>
+            </button> */}
           </form>
         </div>
       </div>
