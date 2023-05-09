@@ -30,11 +30,21 @@ const Header = (props) => {
               openModal={openModal}
               setSearchResults={setSearchResults}
             />
-            <NavLink to={"/profile"}>
-              <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
+            {/* <NavLink
+              to={
+                "/https://towardsdatascience.com/convolutional-neural-networks-explained-9cc5188c4939"
+              }
+            > */}
+            <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
+              <a
+                href="https://towardsdatascience.com/convolutional-neural-networks-explained-9cc5188c4939"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Learn
-              </div>
-            </NavLink>
+              </a>
+            </div>
+            {/* </NavLink> */}
             <NavLink to={"/profile"}>
               <div className="ml-2 mr-2 text-white transition ease-in hover:scale-110 duration-200">
                 Dashboard

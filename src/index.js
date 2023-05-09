@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import LoginPage from "./pages/LoginPage";
@@ -11,13 +11,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <AuthProvider>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/*" element={<App />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signUp" element={<SignUpPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </AuthProvider>
   // </React.StrictMode>
 );
