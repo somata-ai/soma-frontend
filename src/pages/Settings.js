@@ -1,52 +1,30 @@
-import React from "react";
-import { useState } from "react";
-import Header from "../components/Header";
+import { useEffect, useState } from "react";
+import { NODE_API_URL } from "../utils";
 
 const Settings = () => {
-  const [Name, setName] = useState("");
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
   const [userEmail, setUserEmail] = useState("");
-
-  const handleChangUseremail = (e) => {
-    setUserEmail(e.target.value);
-  };
-
   const [bio, setBio] = useState("");
-
-  const handleChangeBio = (e) => {
-    setBio(e.target.value);
-  };
-
   const [url, setUrl] = useState("");
-
-  const handleUrl = (e) => {
-    setUrl(e.target.value);
-  };
-
-  const [socialAccounts, setSocialaccounts] = useState("");
-
-  const handleSocialaccounts = (e) => {
-    setSocialaccounts(e.target.value);
-  };
-
   const [company, setCompany] = useState("");
-
-  const handlechangeCompany = (e) => {
-    setCompany(e.target.value);
-  };
-
-  const [location, setLocation] = useState("");
-
-  const handlesetLocation = (e) => {
-    setLocation(e.target.value);
-  };
-
+  const [country, setCountry] = useState("");
   const [image, setImage] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [profileData, setProfileData] = useState([]);
+
+  useEffect(() => {
+    fetch(NODE_API_URL + `/users/${localStorage.user}/getById`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + localStorage.soma_token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProfileData(data[0]);
+        console.log(data[0]);
+      });
+  }, []);
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -59,6 +37,21 @@ const Settings = () => {
     };
 
     reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch(NODE_API_URL + "/users/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + localStorage.soma_token,
+        body: JSON.stringify({}),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {});
   };
 
   let imagePreview = null;
@@ -108,29 +101,14 @@ const Settings = () => {
               <div className="flex flex-column max-w-full">
                 <div>
                   <div className="w-80 mb-6">
-                    <label>Name</label>
-                    <br />
-                    <input
-                      type="text"
-                      className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
-                      placeholder="Talha Munir"
-                      onChange={setName}
-                    />
-                    <br />
-                    <label className="text-sm font-thin text-gray-500">
-                      Your name may appear around SOMA where you contribute or
-                      are mentioned.
-                    </label>
-                  </div>
-
-                  <div className="w-80 mb-6">
                     <label>Email</label>
                     <br />
                     <input
                       type="email"
                       placeholder="abcd@gmail.com"
                       className="rounded-md p-1 shadow-md h-8 mx-auto w-80"
-                      onChange={setUserEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
+                      value={userEmail}
                     />
                     <br />
                   </div>
@@ -142,7 +120,8 @@ const Settings = () => {
                       type="text"
                       placeholder="Tell us a little bit about yourself"
                       className="rounded-md p-1 shadow-md mx-auto w-80 h-32"
-                      onChange={setBio}
+                      onChange={(e) => setBio(e.target.value)}
+                      value={bio}
                     ></textarea>
                   </div>
                 </div>
@@ -155,18 +134,20 @@ const Settings = () => {
                     id="files"
                     className="text-transparent"
                     onChange={handleImageChange}
+                    value={image}
                   />
                 </div>
               </div>
 
               <div className="w-80 mb-6">
-                <label>URL</label>
+                <label>LinkedIn URL</label>
                 <br />
                 <input
                   type="url"
                   placeholder="URL of your linkedin profile"
                   className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
-                  onChange={setUrl}
+                  onChange={(e) => setUrl(e.target.value)}
+                  value={url}
                 />
                 <label></label>
               </div>
@@ -178,7 +159,8 @@ const Settings = () => {
                   type="text"
                   placeholder="e.g Bitnine Global"
                   className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
-                  onChange={setCompany}
+                  onChange={(e) => setCompany(e.target.value)}
+                  value={company}
                 />
                 <label className="text-sm font-thin text-gray-500">
                   You can mention your company name or your school name here
@@ -186,17 +168,22 @@ const Settings = () => {
               </div>
 
               <div className="w-80 mb-6">
-                <label>Location</label>
+                <label>Country</label>
                 <br />
                 <input
                   type="text"
                   placeholder="Provide your country name here"
                   className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
-                  onChange={setLocation}
+                  onChange={(e) => setCountry(e.target.value)}
+                  value={country}
+                  Country
                 />
               </div>
 
-              <button className="bg-purple-800 hover:bg-purple-900 text-xl text-white rounded-lg mt-1 ml-96 mb-10 w-44 h-10">
+              <button
+                onClick={handleSubmit}
+                className="bg-purple-800 hover:bg-purple-900 text-xl text-white rounded-lg mt-1 ml-96 mb-10 w-44 h-10"
+              >
                 Update Profile
               </button>
             </form>
