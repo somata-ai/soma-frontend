@@ -1,8 +1,11 @@
 import * as tf from "@tensorflow/tfjs";
 import { useEffect } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
-import Network from "./components/Network";
-import "./styles/app.scss";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import Network from "./pages/Network";
+import Settings from "./pages/Settings";
 
 function App() {
   /**
@@ -15,13 +18,28 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Header>
-        <h1>
-          A Neural Network Sandbox on <br></br>your Web Browser
-        </h1>
-      </Header>
-      <Network />
+    <div className="">
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<Navigate to="/model" replace />} />
+        <Route path="/model" element={<Network />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </div>
   );
 }

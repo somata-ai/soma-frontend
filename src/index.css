@@ -1,0 +1,53 @@
+@tailwind base;
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: purple transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;  
+}
+
+*::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: blueviolet;
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(89, 29, 146);
+}
+
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'inter';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('./assets/bg.png');
+  background-size: 200% 180%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.text-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}

@@ -1,5 +1,5 @@
 import { IoMdArrowDropdown } from "react-icons/io";
-import styles from "../styles/dropdownMenu.module.scss";
+import styles from "../styles/dropdownMenu.module.css";
 
 const DropdownMenu = (props) => {
   return (

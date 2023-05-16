@@ -1,22 +1,21 @@
 .container {
     height: 200px;
-    // border: 1px solid red;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    margin-bottom: 5px;
+    box-shadow: 1px 1px 1px 1px lightgray;
 }
 
 .card, .epoch {
-    color: black;
+    font-weight: 500;
     width: 160px;
     height: 120px;
     display: flex;
     font-size: small;
     flex-direction: column;
     justify-content: space-evenly;
-    // align-items: flex-start;
-    // border: 1px solid red;
 }
 
 .card h4 {
@@ -28,15 +27,9 @@
 
 .card_container {
     width: 70%;
-    // border: 1px solid red;
     display: flex;
     flex-direction: row;  
     justify-content: space-evenly; 
-}
-
-.epoch {
-    width: 100px;
-    // border: 1px solid red;  
 }
 
 .buttons_container {
@@ -46,15 +39,15 @@
 }
 
 .reset_button {
-    color: teal;
+    color: #6a229b;
     font-size: x-large;
 }
 
 .start_button {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     color: white;
-    background-color: teal;
+    background-color: #6a229b;
     border-radius: 50%;
     display: flex;
     justify-content: center;
