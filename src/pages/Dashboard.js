@@ -7,6 +7,7 @@ import { NODE_API_URL } from "../utils";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [models, setModels] = useState([]);
+  const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
     const getModels = () => {
@@ -25,7 +26,23 @@ const Dashboard = () => {
         .catch((err) => console.log(err));
     };
 
+    const getProfileData = () => {
+      fetch(NODE_API_URL + `/users/${localStorage.user}/getById`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "bearer " + localStorage.soma_token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProfileData(data[0]);
+          console.log(data[0]);
+        });
+    };
+
     getModels();
+    getProfileData();
   }, []);
 
   return (
@@ -35,10 +52,11 @@ const Dashboard = () => {
         className="bg-white pt-10 flex flex-col items-center w-1/4"
         style={{ boxShadow: "1px 0px 1px 0 lightgray" }}
       >
-        <ProfilePicture />
+        <ProfilePicture picture={profileData.profile_picture_url} />
         <p className="mt-5 text-justify w-9/12 text-clamp">
-          Description will go here. Description will go here. Description will
-          go here. Description will go here . Description will go here.
+          {profileData.bio
+            ? profileData.bio
+            : "Description will go here. Description will go here. Description will go here. Description will go here . Description will go here."}
         </p>
         <button
           className="w-64 h-8 mt-6 bg-purple-900 text-white text-md hover:bg-purple-800 rounded"

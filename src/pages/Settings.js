@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NODE_API_URL } from "../utils";
 
 const Settings = () => {
+  const navigate = useNavigate();
+
   const [userEmail, setUserEmail] = useState("");
   const [bio, setBio] = useState("");
-  const [url, setUrl] = useState("");
+  const [linkedin_url, setLinkedinUrl] = useState("");
   const [company, setCompany] = useState("");
   const [country, setCountry] = useState("");
-  const [image, setImage] = useState("");
-  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
-  const [profileData, setProfileData] = useState([]);
+  const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
     fetch(NODE_API_URL + `/users/${localStorage.user}/getById`, {
@@ -21,23 +22,14 @@ const Settings = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setProfileData(data[0]);
-        console.log(data[0]);
+        setUserEmail(data[0].email || "");
+        setBio(data[0].bio || "");
+        setLinkedinUrl(data[0].linkedin_url || "");
+        setCompany(data[0].company || "");
+        setCountry(data[0].country || "");
+        setImageURL(data[0].profile_picture_url || "");
       });
   }, []);
-
-  const handleImageChange = (e) => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      setImage(file);
-      setImagePreviewUrl(reader.result);
-    };
-
-    reader.readAsDataURL(file);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,46 +39,23 @@ const Settings = () => {
       headers: {
         "Content-Type": "application/json",
         Authorization: "bearer " + localStorage.soma_token,
-        body: JSON.stringify({}),
       },
+      body: JSON.stringify({
+        user_id: localStorage.user,
+        email: userEmail,
+        bio: bio,
+        profile_pic_url: imageURL,
+        linkedin_url: linkedin_url,
+        company: company,
+        country: country,
+      }),
     })
       .then((res) => res.json())
-      .then((data) => {});
+      .then((data) => {
+        console.log(data);
+        navigate("/profile", { replace: true });
+      });
   };
-
-  let imagePreview = null;
-  if (imagePreviewUrl) {
-    imagePreview = (
-      <div
-        style={{
-          backgroundImage: `url(${imagePreviewUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-        }}
-      />
-    );
-  } else {
-    imagePreview = (
-      <div
-        style={{
-          backgroundImage:
-            "url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fboy-standing&psig=AOvVaw1uGs-_k8ZWbsXGyHJCXqUp&ust=1675958955488000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCPC9yuOnhv0CFQAAAAAdAAAAABAG)",
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-          backgroundColor: "white",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <p>Please select an image</p>
-      </div>
-    );
-  }
 
   return (
     <div
@@ -125,18 +94,18 @@ const Settings = () => {
                     ></textarea>
                   </div>
                 </div>
+              </div>
 
-                <div className=" mx-auto ml-96">
-                  <div> {imagePreview}</div>
-                  <br />
-                  <input
-                    type="file"
-                    id="files"
-                    className="text-transparent"
-                    onChange={handleImageChange}
-                    value={image}
-                  />
-                </div>
+              <div className="w-80 mb-6">
+                <label>Image URL</label>
+                <br />
+                <input
+                  type="url"
+                  placeholder="URL of your linkedin profile"
+                  className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
+                  onChange={(e) => setImageURL(e.target.value)}
+                  value={imageURL}
+                />
               </div>
 
               <div className="w-80 mb-6">
@@ -146,10 +115,9 @@ const Settings = () => {
                   type="url"
                   placeholder="URL of your linkedin profile"
                   className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
-                  onChange={(e) => setUrl(e.target.value)}
-                  value={url}
+                  onChange={(e) => setLinkedinUrl(e.target.value)}
+                  value={linkedin_url}
                 />
-                <label></label>
               </div>
 
               <div className="w-80 mb-6">
@@ -176,7 +144,6 @@ const Settings = () => {
                   className="rounded-md p-1 shadow-md w-80 h-8 mx-auto"
                   onChange={(e) => setCountry(e.target.value)}
                   value={country}
-                  Country
                 />
               </div>
 
