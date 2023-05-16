@@ -5,8 +5,7 @@ export const layerTypes = {
   avgPool2d: "avgPool2d",
 };
 
-//"http://localhost:5050";
-export const NODE_API_URL = "http://localhost:5050";//"http://54.206.20.11:5050";
+export const NODE_API_URL = "https://www.somata-ai.com";
 
 const addNeuron = (index, layers, updateLayers) => {
   const updatedLayers = [...layers];
